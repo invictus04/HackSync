@@ -1,4 +1,5 @@
-// src/features/hackathons/components/HostStep1BasicInfo.jsx import { useDispatch, useSelector } from "react-redux";
+// src/features/hackathons/components/HostStep1BasicInfo.jsx 
+import { useDispatch, useSelector } from "react-redux";
 import { updateFormData } from "../redux/hostSlice";
 import ImageUploadField from "../../../components/ui/ImageUploadField";
 export default function HostStep1BasicInfo() {
@@ -10,10 +11,10 @@ export default function HostStep1BasicInfo() {
   return (
     <div className="space-y-6">
       {" "}
-      {/* Title */}{" "}
+      {/* Title */}
       <div>
         {" "}
-        <label className="block text-sm font-semibold mb-2 text-[#38302E]">
+        <label className="block text-sm font-semibold mb-2 text-deep-espresso">
           {" "}
           Hackathon Title <span className="text-red-400">*</span>{" "}
         </label>{" "}
@@ -23,9 +24,9 @@ export default function HostStep1BasicInfo() {
           onChange={(e) => handleChange("title", e.target.value)}
           placeholder="e.g., AI Innovation Challenge 2026"
           maxLength={100}
-          className="w-full rounded-xl border border-[#788585]/30 bg-white px-4 py-3 text-[#38302E] placeholder-slate-500 outline-none transition focus:border-[#9CAEA9]"
+          className="w-full rounded-xl border border-warm-stone bg-white px-4 py-3 text-deep-espresso placeholder-black/40 outline-none transition focus:border-dark-khaki"
         />{" "}
-        <p className="mt-1 text-xs text-[#6F6866]">
+        <p className="mt-1 text-xs text-black/60">
           {formData.title.length}/100
         </p>{" "}
         {errors.title && (
@@ -35,7 +36,7 @@ export default function HostStep1BasicInfo() {
       {/* Tagline */}{" "}
       <div>
         {" "}
-        <label className="block text-sm font-semibold mb-2 text-[#38302E]">
+        <label className="block text-sm font-semibold mb-2 text-deep-espresso">
           {" "}
           Tagline <span className="text-red-400">*</span>{" "}
         </label>{" "}
@@ -45,9 +46,9 @@ export default function HostStep1BasicInfo() {
           onChange={(e) => handleChange("tagline", e.target.value)}
           placeholder="e.g., Innovate. Build. Compete."
           maxLength={160}
-          className="w-full rounded-xl border border-[#788585]/30 bg-white px-4 py-3 text-[#38302E] placeholder-slate-500 outline-none transition focus:border-[#9CAEA9]"
+          className="w-full rounded-xl border border-warm-stone bg-white px-4 py-3 text-deep-espresso placeholder-black/40 outline-none transition focus:border-dark-khaki"
         />{" "}
-        <p className="mt-1 text-xs text-[#6F6866]">
+        <p className="mt-1 text-xs text-black/60">
           {formData.tagline.length}/160
         </p>{" "}
         {errors.tagline && (
@@ -57,7 +58,7 @@ export default function HostStep1BasicInfo() {
       {/* Description */}{" "}
       <div>
         {" "}
-        <label className="block text-sm font-semibold mb-2 text-[#38302E]">
+        <label className="block text-sm font-semibold mb-2 text-deep-espresso">
           {" "}
           Full Description <span className="text-red-400">*</span>{" "}
         </label>{" "}
@@ -67,9 +68,9 @@ export default function HostStep1BasicInfo() {
           placeholder="Describe your hackathon — goals, themes, what participants can expect..."
           rows={5}
           maxLength={2000}
-          className="w-full resize-none rounded-xl border border-[#788585]/30 bg-white px-4 py-3 text-[#38302E] placeholder-slate-500 outline-none transition focus:border-[#9CAEA9]"
+          className="w-full resize-none rounded-xl border border-warm-stone bg-white px-4 py-3 text-deep-espresso placeholder-black/40 outline-none transition focus:border-dark-khaki"
         />{" "}
-        <p className="mt-1 text-xs text-[#6F6866]">
+        <p className="mt-1 text-xs text-black/60">
           {formData.description.length}/2000
         </p>{" "}
         {errors.description && (
@@ -79,7 +80,7 @@ export default function HostStep1BasicInfo() {
       {/* FAQ */}{" "}
       <div>
         {" "}
-        <label className="block text-sm font-semibold mb-2 text-[#38302E]">
+        <label className="block text-sm font-semibold mb-2 text-deep-espresso">
           {" "}
           FAQ <span className="text-red-400">*</span>{" "}
         </label>{" "}
@@ -89,9 +90,9 @@ export default function HostStep1BasicInfo() {
           placeholder="Enter frequently asked questions and their answers..."
           rows={4}
           maxLength={1000}
-          className="w-full resize-none rounded-xl border border-[#788585]/30 bg-white px-4 py-3 text-[#38302E] placeholder-slate-500 outline-none transition focus:border-[#9CAEA9]"
+          className="w-full resize-none rounded-xl border border-warm-stone bg-white px-4 py-3 text-deep-espresso placeholder-black/40 outline-none transition focus:border-dark-khaki"
         />{" "}
-        <p className="mt-1 text-xs text-[#6F6866]">
+        <p className="mt-1 text-xs text-black/60">
           {formData.faq?.length || 0}/1000
         </p>{" "}
         {errors.faq && (
@@ -101,7 +102,7 @@ export default function HostStep1BasicInfo() {
       {/* Rules */}{" "}
       <div>
         {" "}
-        <label className="block text-sm font-semibold mb-2 text-[#38302E]">
+        <label className="block text-sm font-semibold mb-2 text-deep-espresso">
           {" "}
           Rules <span className="text-red-400">*</span>{" "}
         </label>{" "}
@@ -111,18 +112,18 @@ export default function HostStep1BasicInfo() {
           placeholder="State the rules for participants..."
           rows={4}
           maxLength={2000}
-          className="w-full resize-none rounded-xl border border-[#788585]/30 bg-white px-4 py-3 text-[#38302E] placeholder-slate-500 outline-none transition focus:border-[#9CAEA9]"
+          className="w-full resize-none rounded-xl border border-warm-stone bg-white px-4 py-3 text-deep-espresso placeholder-black/40 outline-none transition focus:border-dark-khaki"
         />{" "}
-        <p className="mt-1 text-xs text-[#6F6866]">
+        <p className="mt-1 text-xs text-black/60">
           {formData.rules?.length || 0}/2000
         </p>{" "}
         {errors.rules && (
           <p className="mt-1 text-xs text-red-400">{errors.rules}</p>
         )}{" "}
       </div>{" "}
-      {/* Images */}{" "}
+      {/* Images */}
       <div className="grid gap-6 md:grid-cols-2">
-        {" "}
+
         <ImageUploadField
           label="Banner Image"
           currentUrl={formData.bannerImageUrl}
@@ -136,7 +137,7 @@ export default function HostStep1BasicInfo() {
           onUpload={(url) => handleChange("profileImageUrl", url)}
         />{" "}
       </div>{" "}
-      <p className="text-xs text-[#6F6866]">
+      <p className="text-xs text-black/60">
         {" "}
         Images are optional but strongly recommended for a professional
         appearance.{" "}

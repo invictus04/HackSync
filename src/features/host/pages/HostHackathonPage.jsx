@@ -130,15 +130,15 @@ export default function HostHackathonPage() {
     }
 
     return (
-        <div className="min-h-screen bg-slate-950 text-white">
+        <div className="min-h-screen bg-white">
             <Navbar />
             <div className="py-12 mx-auto max-w-3xl px-5">
 
                 {/* Header */}
                 <div className="mb-10">
-                    <p className="text-indigo-400 text-sm font-semibold uppercase tracking-wider mb-2">Host</p>
-                    <h1 className="text-4xl font-bold">Create a Hackathon</h1>
-                    <p className="mt-3 text-slate-400">
+                    <p className="text-deep-espresso text-sm font-semibold uppercase tracking-wider mb-2">Host</p>
+                    <h1 className="text-4xl font-bold text-dark-khaki">Create a Hackathon</h1>
+                    <p className="mt-3 text-black/60">
                         Fill in the details below to submit your hackathon for platform review.
                     </p>
                 </div>
@@ -148,22 +148,22 @@ export default function HostHackathonPage() {
                     {STEPS.map((s, index) => (
                         <div key={s.number} className="flex flex-1 items-center">
                             <div className="flex flex-col items-center">
-                                <div className={`flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold transition-all ${step > s.number ? "bg-indigo-600 text-white" : step === s.number ? "bg-indigo-600 text-white ring-4 ring-indigo-600/30" : "bg-slate-800 text-slate-500"}`}>
+                                <div className={`flex h-9 w-9 items-center justify-center rounded-full text-sm font-bold transition-all ${step > s.number ? "bg-dark-khaki text-white" : step === s.number ? "bg-dark-khaki text-white ring-4 ring-dark-khaki/30" : "bg-corn-silk text-deep-espresso"}`}>
                                     {step > s.number ? "✓" : s.number}
                                 </div>
-                                <p className={`mt-2 text-xs font-medium ${step === s.number ? "text-indigo-400" : "text-slate-500"}`}>
+                                <p className={`mt-2 text-xs font-medium ${step === s.number ? "text-dark-khaki" : "text-black/60"}`}>
                                     {s.label}
                                 </p>
                             </div>
                             {index < STEPS.length - 1 && (
-                                <div className={`h-0.5 flex-1 mx-2 mb-5 transition-all ${step > s.number ? "bg-indigo-600" : "bg-slate-800"}`} />
+                                <div className={`h-0.5 flex-1 mx-2 mb-5 transition-all ${step > s.number ? "bg-dark-khaki" : "bg-warm-stone"}`} />
                             )}
                         </div>
                     ))}
                 </div>
 
                 {/* Form Card */}
-                <div className="rounded-2xl border border-slate-800 bg-slate-900 p-8">
+                <div className="rounded-2xl border border-warm-stone bg-corn-silk p-8">
                     {step === 1 && <HostStep1BasicInfo />}
                     {step === 2 && <HostStep2Timeline />}
                     {step === 3 && <HostStep3Review onSubmit={handleSubmit} />}
@@ -171,24 +171,30 @@ export default function HostHackathonPage() {
                     {/* Navigation */}
                     {step < 3 && (
                         <div className="mt-8 flex items-center justify-between">
-                            <Button
+                            <button
                                 onClick={handlePrevious}
                                 disabled={step === 1}
-                                variant="outline"
+                                className="px-6 py-2 rounded-xl font-semibold transition-colors duration-300 border border-warm-stone bg-white text-deep-espresso hover:bg-dark-khaki hover:text-white disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                             >
                                 ← Back
-                            </Button>
-                            <span className="text-sm text-slate-500">Step {step} of {totalSteps}</span>
-                            <Button onClick={handleNext}>
+                            </button>
+                            <span className="text-sm text-black/60">Step {step} of {totalSteps}</span>
+                            <button 
+                                onClick={handleNext}
+                                className="px-6 py-2 rounded-xl font-semibold transition-colors duration-300 bg-dark-khaki text-white hover:bg-deep-espresso cursor-pointer"
+                            >
                                 Next →
-                            </Button>
+                            </button>
                         </div>
                     )}
                     {step === 3 && (
                         <div className="mt-4 flex justify-start">
-                            <Button onClick={handlePrevious} variant="outline">
+                            <button 
+                                onClick={handlePrevious}
+                                className="px-6 py-2 rounded-xl font-semibold transition-colors duration-300 border border-warm-stone bg-white text-deep-espresso hover:bg-dark-khaki hover:text-white cursor-pointer"
+                            >
                                 ← Back
-                            </Button>
+                            </button>
                         </div>
                     )}
                 </div>

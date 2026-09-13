@@ -5,20 +5,11 @@ import Container from "../common/Container";
 export default function Footer() {
   return (
     <footer
-      className="py-10"
+      className="py-10 bg-white"
       style={{ borderTop: "1px solid rgba(120, 133, 133, 0.2)" }}
     >
       <Container>
-        <div
-          className="
-                        flex
-                        flex-col
-                        md:flex-row
-                        items-center
-                        justify-between
-                        gap-4
-                    "
-        >
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <h2
             className="text-xl font-bold"
             style={{

@@ -1,33 +1,17 @@
-// src/features/hackathons/pages/HostDashboardPage.jsx import { useEffect, useState } from "react";
+// src/features/hackathons/pages/HostDashboardPage.jsx 
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import Navbar from "../../../components/layout/Navbar";
-import { getHostHackathons } from "../services/hostService"; // ─── Status config ─────────────────────────────────────────────────────────────
+import { getHostHackathons } from "../services/hostService";
+
 const STATUS_CONFIG = {
-  DRAFT: {
-    color: "bg-amber-900/40 text-amber-300 border-amber-700/40",
-    dot: "bg-amber-400",
-  },
-  APPROVED: {
-    color: "bg-emerald-900/40 text-emerald-300 border-emerald-700/40",
-    dot: "bg-emerald-400",
-  },
-  REJECTED: {
-    color: "bg-red-900/40 text-red-300 border-red-700/40",
-    dot: "bg-red-400",
-  },
-  PUBLISHED: {
-    color: "bg-indigo-900/40 text-indigo-300 border-indigo-700/40",
-    dot: "bg-indigo-400",
-  },
-  ACTIVE: {
-    color: "bg-blue-900/40 text-blue-300 border-blue-700/40",
-    dot: "bg-blue-400",
-  },
-  COMPLETED: {
-    color: "bg-slate-700/40 text-[#6F6866] border-slate-600/40",
-    dot: "bg-slate-400",
-  },
+  DRAFT: { color: "bg-yellow-100 text-yellow-800 border-yellow-200", dot: "bg-yellow-500" },
+  APPROVED: { color: "bg-purple-100 text-purple-800 border-purple-200", dot: "bg-purple-500" },
+  REJECTED: { color: "bg-red-100 text-red-800 border-red-200", dot: "bg-red-500" },
+  PUBLISHED: { color: "bg-pink-100 text-pink-800 border-pink-200", dot: "bg-pink-500" },
+  ACTIVE: { color: "bg-blue-100 text-blue-800 border-blue-200", dot: "bg-blue-500" },
+  COMPLETED: { color: "bg-emerald-100 text-emerald-800 border-emerald-200", dot: "bg-emerald-500" },
 };
 function StatusBadge({ status }) {
   const cfg = STATUS_CONFIG[status] || STATUS_CONFIG.DRAFT;
@@ -35,31 +19,30 @@ function StatusBadge({ status }) {
     <span
       className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-semibold ${cfg.color}`}
     >
-      {" "}
-      <span className={`h-1.5 w-1.5 rounded-full ${cfg.dot}`} /> {status}{" "}
+      <span className={`h-1.5 w-1.5 rounded-full ${cfg.dot}`} /> {status}
     </span>
   );
-} // ─── Skeleton card ─────────────────────────────────────────────────────────────
+}
 function SkeletonCard() {
   return (
     <div className="rounded-2xl border border-[#788585]/30 bg-white overflow-hidden animate-pulse">
-      {" "}
-      <div className="h-36 bg-white" />{" "}
+
+      <div className="h-36 bg-white" />
       <div className="p-5 space-y-3">
-        {" "}
-        <div className="h-4 w-20 rounded bg-white" />{" "}
-        <div className="h-6 w-48 rounded bg-white" />{" "}
-        <div className="h-4 w-64 rounded bg-white" />{" "}
-        <div className="h-3 w-40 rounded bg-white" />{" "}
+
+        <div className="h-4 w-20 rounded bg-white" />
+        <div className="h-6 w-48 rounded bg-white" />
+        <div className="h-4 w-64 rounded bg-white" />
+        <div className="h-3 w-40 rounded bg-white" />
         <div className="mt-4 flex gap-2">
-          {" "}
-          <div className="h-9 flex-1 rounded-xl bg-white" />{" "}
-          <div className="h-9 flex-1 rounded-xl bg-white" />{" "}
+
+          <div className="h-9 flex-1 rounded-xl bg-white" />
+          <div className="h-9 flex-1 rounded-xl bg-white" />
         </div>{" "}
       </div>{" "}
     </div>
   );
-} // ─── Hackathon Card ────────────────────────────────────────────────────────────
+} 
 function HackathonCard({ hackathon }) {
   const navigate = useNavigate();
   function fmtDate(value) {
@@ -71,11 +54,9 @@ function HackathonCard({ hackathon }) {
     });
   }
   return (
-    <div className="group flex flex-col rounded-2xl border border-[#788585]/30 bg-white overflow-hidden transition hover:border-[#788585]/30 hover:shadow-lg hover:shadow-black/30">
-      {" "}
-      {/* Banner */}{" "}
-      <div className="relative h-36 bg-gradient-to-br from-slate-800 to-slate-900 overflow-hidden">
-        {" "}
+    <div className="group flex flex-col rounded-2xl border border-[#788585]/30 bg-corn-silk overflow-hidden transition hover:border-[#788585]/30 hover:shadow-lg hover:shadow-black/30">
+
+      <div className="relative h-36 overflow-hidden">
         {hackathon.bannerImageUrl ? (
           <img
             src={hackathon.bannerImageUrl}
@@ -83,54 +64,50 @@ function HackathonCard({ hackathon }) {
             className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
         ) : (
-          <div className="flex h-full items-center justify-center">
-            {" "}
-            <span className="text-4xl opacity-20">🏆</span>{" "}
+          <div className="flex h-full items-center justify-center bg-gradient-to-br from-corn-silk to-white">
+            <span className="text-4xl opacity-20">🏆</span>
           </div>
-        )}{" "}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent" />{" "}
+        )}
+        <div className="absolute inset-0" />
         {hackathon.profileImageUrl && (
           <img
             src={hackathon.profileImageUrl}
             alt=""
-            className="absolute bottom-3 left-4 h-12 w-12 rounded-xl border-2 border-[#788585]/30 object-cover"
+            className="absolute bottom-3 left-4 h-12 w-12 rounded-xl border-2 border-white bg-white object-cover shadow-sm"
           />
-        )}{" "}
-      </div>{" "}
-      {/* Body */}{" "}
+        )}
+      </div>
+
       <div className="flex flex-1 flex-col p-5">
-        {" "}
         <div className="mb-3 flex items-center justify-between">
-          {" "}
-          <StatusBadge status={hackathon.hackathonStatus} />{" "}
-          <span className="text-xs text-slate-600">#{hackathon.id}</span>{" "}
-        </div>{" "}
-        <h3 className="text-lg font-bold text-[#38302E] line-clamp-1">
+          <StatusBadge status={hackathon.hackathonStatus} />
+          <span className="text-xs text-warm-stone">#{hackathon.id}</span>
+        </div>
+        <h3 className="text-lg font-bold text-deep-espresso line-clamp-1">
           {hackathon.title}
-        </h3>{" "}
-        <p className="mt-1 text-sm text-[#6F6866] line-clamp-1">
+        </h3>
+        <p className="mt-1 text-sm text-warm-stone line-clamp-1">
           {hackathon.tagline}
-        </p>{" "}
+        </p>
         <p className="mt-3 text-xs text-[#6F6866]">
-          {" "}
-          🏆 {fmtDate(hackathon.hackathonStarts)} →{" "}
-          {fmtDate(hackathon.hackathonEnds)}{" "}
-        </p>{" "}
-        {/* Actions */}{" "}
+
+          🏆 {fmtDate(hackathon.hackathonStarts)} →
+          {fmtDate(hackathon.hackathonEnds)}
+        </p>
         <div className="mt-auto pt-5 flex">
-          {" "}
+
           <button
             onClick={() => navigate(`/host/hackathon/${hackathon.id}/manage`)}
-            className="flex-1 rounded-xl bg-[#9CAEA9]/10 border border-indigo-500/30 py-2.5 text-sm font-bold text-[#9CAEA9] shadow-sm transition-all hover:bg-[#9CAEA9] hover:text-[#38302E] hover:border-indigo-500 hover:shadow-indigo-600/20 hover:-translate-y-0.5 cursor-pointer"
+            className="flex-1 rounded-xl bg-dark-khaki border border-dark-khaki/30 py-2.5 text-sm font-bold text-white shadow-sm transition-all hover:bg-deep-espresso hover:border-dark-khaki hover:shadow-dark-khaki/20 hover:-translate-y-0.5 cursor-pointer"
           >
-            {" "}
-            Manage Hackathon{" "}
-          </button>{" "}
-        </div>{" "}
-      </div>{" "}
+
+            Manage Hackathon
+          </button>
+        </div>
+      </div>
     </div>
   );
-} // ─── Main Page ─────────────────────────────────────────────────────────────────
+}
 export default function HostDashboardPage() {
   const [hackathons, setHackathons] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -148,67 +125,62 @@ export default function HostDashboardPage() {
     load();
   }, []);
   return (
-    <div className="min-h-screen bg-white text-[#38302E]">
-      {" "}
-      <Navbar />{" "}
+    <div className="min-h-screen bg-white text-[var(--text-primary)]">
+
+      <Navbar />
       <div className="py-12 mx-auto max-w-7xl px-5 md:px-8">
-        {" "}
-        {/* Header */}{" "}
+
         <div className="mb-10 flex items-start justify-between gap-4">
-          {" "}
           <div>
-            {" "}
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#9CAEA9] mb-2">
+            <p className="text-xs font-semibold uppercase tracking-widest text-deep-espresso mb-2">
               Organizer
-            </p>{" "}
-            <h1 className="text-4xl font-bold">My Hackathons</h1>{" "}
-            <p className="mt-2 text-[#6F6866]">
+            </p>
+            <h1 className="text-4xl font-bold">My Hackathons</h1>
+            <p className="mt-2 text-warm-stone">
               All hackathons you've created on HackSync.
-            </p>{" "}
-          </div>{" "}
+            </p>
+          </div>
           <Link
             to="/host-hackathon"
-            className="shrink-0 rounded-xl bg-[#9CAEA9] px-5 py-2.5 text-sm font-semibold text-[#38302E] transition hover:bg-indigo-500"
+            className="shrink-0 rounded-xl bg-deep-espresso text-white px-5 py-2.5 text-sm font-semibold"
           >
-            {" "}
-            + Create New{" "}
-          </Link>{" "}
-        </div>{" "}
-        {/* Grid */}{" "}
+            + Create New
+          </Link>
+        </div>
         {isLoading ? (
           <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-            {" "}
+
             <SkeletonCard />
             <SkeletonCard />
-            <SkeletonCard />{" "}
+            <SkeletonCard />
           </div>
         ) : hackathons.length === 0 ? (
           <div className="rounded-2xl border border-dashed border-[#788585]/30 bg-white/50 py-20 text-center">
-            {" "}
-            <p className="text-5xl mb-4">🚀</p>{" "}
+
+            <p className="text-5xl mb-4">🚀</p>
             <h3 className="text-xl font-bold text-[#38302E] mb-2">
               No hackathons yet
-            </h3>{" "}
+            </h3>
             <p className="text-[#6F6866] mb-6">
               Create your first hackathon and inspire the community.
-            </p>{" "}
+            </p>
             <Link
               to="/host-hackathon"
               className="inline-block rounded-xl bg-[#9CAEA9] px-6 py-3 font-semibold text-[#38302E] transition hover:bg-indigo-500"
             >
-              {" "}
-              Create Hackathon →{" "}
-            </Link>{" "}
+
+              Create Hackathon →
+            </Link>
           </div>
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-            {" "}
+
             {hackathons.map((h) => (
               <HackathonCard key={h.id} hackathon={h} />
-            ))}{" "}
+            ))}
           </div>
-        )}{" "}
-      </div>{" "}
+        )}
+      </div>
     </div>
   );
 }

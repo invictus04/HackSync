@@ -1,4 +1,3 @@
-// src/components/layout/Navbar.jsx
 
 import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router";
@@ -138,12 +137,16 @@ export default function Navbar({ hideLinks = false }) {
       ? location.pathname === "/"
       : location.pathname.startsWith(path);
 
+  const isHackathonDetails = location.pathname.match(/^\/hackathons\/[^/]+$/);
+
   return (
     <>
       <header
         className={`sticky top-0 z-50 transition-all duration-500 ease-in-out ${
           scrolled
             ? "bg-white/85 backdrop-blur-md border-b border-muted-slate/15 pt-0"
+            : isHackathonDetails
+            ? "bg-white border-b border-transparent pt-3"
             : "bg-transparent border-b border-transparent pt-3"
         }`}
       >

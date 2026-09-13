@@ -19,5 +19,9 @@ export const theme = {
     // Backgrounds & Surfaces
     // Global app background, hover states on tables, sidebar navigation background
     paleMint: '#CCDAD1',
+
+    cornsilk: '#FAF4D3',
+
+    darkKhaki: '#524632'
   }
 };

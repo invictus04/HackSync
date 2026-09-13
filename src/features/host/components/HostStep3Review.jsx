@@ -1,13 +1,14 @@
-// src/features/hackathons/components/HostStep3Review.jsx import { useSelector } from "react-redux";
+// src/features/hackathons/components/HostStep3Review.jsx 
+import { useSelector } from "react-redux";
 import Button from "../../../components/ui/Button";
 function ReviewRow({ label, value }) {
   return (
     <div className="flex gap-3">
-      {" "}
-      <span className="min-w-36 text-sm text-[#6F6866]">{label}</span>{" "}
-      <span className="text-sm text-[#38302E] font-medium">
-        {value || <span className="text-slate-600 italic">Not set</span>}
-      </span>{" "}
+      
+      <span className="min-w-36 text-sm text-black/60">{label}</span>
+      <span className="text-sm text-deep-espresso font-medium">
+        {value || <span className="text-black/40 italic">Not set</span>}
+      </span>
     </div>
   );
 }
@@ -29,111 +30,111 @@ export default function HostStep3Review({ onSubmit }) {
   const { formData, isSubmitting } = useSelector((state) => state.host);
   return (
     <div className="space-y-8">
-      {" "}
+     
       <div>
-        {" "}
-        <h3 className="text-xl font-bold text-[#38302E] mb-1">
+        
+        <h3 className="text-xl font-bold text-deep-espresso mb-1">
           Review & Submit
-        </h3>{" "}
-        <p className="text-[#6F6866] text-sm">
-          {" "}
+        </h3>
+        <p className="text-black/60 text-sm">
+          
           Please review all details before submitting. Your hackathon will go to
-          Admin for approval.{" "}
-        </p>{" "}
-      </div>{" "}
-      {/* Basic Info */}{" "}
-      <div className="rounded-xl border border-[#788585]/30 bg-white/50 p-6 space-y-3">
-        {" "}
-        <h4 className="font-semibold text-[#9CAEA9] mb-4">
+          Admin for approval.
+        </p>
+      </div>
+      {/* Basic Info */}
+      <div className="rounded-xl border border-warm-stone bg-white/60 p-6 space-y-3">
+        
+        <h4 className="font-semibold text-deep-espresso mb-4">
           Basic Information
-        </h4>{" "}
-        <ReviewRow label="Title" value={formData.title} />{" "}
-        <ReviewRow label="Tagline" value={formData.tagline} />{" "}
+        </h4>
+        <ReviewRow label="Title" value={formData.title} />
+        <ReviewRow label="Tagline" value={formData.tagline} />
         <div className="flex gap-3">
-          {" "}
-          <span className="min-w-36 text-sm text-[#6F6866]">
+          
+          <span className="min-w-36 text-sm text-black/60">
             Description
-          </span>{" "}
-          <p className="text-sm text-[#38302E] line-clamp-3">
+          </span>
+          <p className="text-sm text-deep-espresso line-clamp-3">
             {formData.description || (
-              <span className="text-slate-600 italic">Not set</span>
+              <span className="text-black/40 italic">Not set</span>
             )}
-          </p>{" "}
-        </div>{" "}
+          </p>
+        </div>
         {formData.bannerImageUrl && (
           <div className="flex gap-3 items-center">
-            {" "}
-            <span className="min-w-36 text-sm text-[#6F6866]">Banner</span>{" "}
+            
+            <span className="min-w-36 text-sm text-black/60">Banner</span>
             <img
               src={formData.bannerImageUrl}
               alt="Banner preview"
               className="h-20 rounded-lg object-cover"
-            />{" "}
+            />
           </div>
-        )}{" "}
+        )}
         {formData.profileImageUrl && (
           <div className="flex gap-3 items-center">
-            {" "}
-            <span className="min-w-36 text-sm text-[#6F6866]">
+            
+            <span className="min-w-36 text-sm text-black/60">
               Profile
-            </span>{" "}
+            </span>
             <img
               src={formData.profileImageUrl}
               alt="Profile preview"
-              className="h-14 w-14 rounded-full object-cover border-2 border-[#788585]/30"
-            />{" "}
+              className="h-14 w-14 rounded-full object-cover border-2 border-warm-stone"
+            />
           </div>
-        )}{" "}
-      </div>{" "}
-      {/* Timeline */}{" "}
-      <div className="rounded-xl border border-[#788585]/30 bg-white/50 p-6 space-y-3">
-        {" "}
-        <h4 className="font-semibold text-emerald-400 mb-4">
+        )}
+      </div>
+      {/* Timeline */}
+      <div className="rounded-xl border border-warm-stone bg-white/60 p-6 space-y-3">
+        
+        <h4 className="font-semibold text-deep-espresso mb-4">
           Timeline & Team Size
-        </h4>{" "}
-        <ReviewRow label="Min Team" value={`${formData.minTeamSize} members`} />{" "}
-        <ReviewRow label="Max Team" value={`${formData.maxTeamSize} members`} />{" "}
+        </h4>
+        <ReviewRow label="Min Team" value={`${formData.minTeamSize} members`} />
+        <ReviewRow label="Max Team" value={`${formData.maxTeamSize} members`} />
         <ReviewRow
           label="Reg. Opens"
           value={formatDate(formData.registrationStart)}
-        />{" "}
+        />
         <ReviewRow
           label="Reg. Closes"
           value={formatDate(formData.registrationEnd)}
-        />{" "}
+        />
         <ReviewRow
           label="Hackathon Starts"
           value={formatDate(formData.hackathonStart)}
-        />{" "}
+        />
         <ReviewRow
           label="Hackathon Ends"
           value={formatDate(formData.hackathonEnd)}
-        />{" "}
-      </div>{" "}
-      {/* Submission info box */}{" "}
-      <div className="rounded-xl border border-indigo-800/50 bg-indigo-950/30 p-5">
-        {" "}
-        <p className="text-sm font-semibold text-indigo-300 mb-2">
+        />
+      </div>
+      {/* Submission info box */}
+      <div className="rounded-xl border border-warm-stone bg-white/60 p-5">
+        
+        <p className="text-sm font-semibold text-deep-espresso mb-2">
           ⏳ What happens after submission?
-        </p>{" "}
-        <p className="text-sm text-[#6F6866]">
-          {" "}
-          Your hackathon will be created with{" "}
-          <strong className="text-[#38302E]">DRAFT</strong> status and sent for
+        </p>
+        <p className="text-sm text-black/60">
+          
+          Your hackathon will be created with
+          <strong className="text-deep-espresso"> DRAFT </strong> status and sent for
           admin review. Once approved, it will appear on the platform. You can
           manage judges, mentors, and participants from your host
-          dashboard.{" "}
-        </p>{" "}
-      </div>{" "}
+          dashboard.
+        </p>
+      </div>
       <Button onClick={onSubmit} disabled={isSubmitting} className="w-full">
-        {" "}
-        {isSubmitting ? "Creating Hackathon..." : "Submit for Review →"}{" "}
-      </Button>{" "}
-      <p className="text-xs text-center text-[#6F6866]">
-        {" "}
+        
+        {isSubmitting ? "Creating Hackathon..." : "Submit for Review →"}
+      </Button>
+      <p className="text-xs text-center text-black/60">
+        
         By submitting, you agree to HackSync's Terms of Service and Community
-        Guidelines.{" "}
-      </p>{" "}
+        Guidelines.
+      </p>
     </div>
   );
 }

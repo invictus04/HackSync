@@ -11,13 +11,13 @@ export default function Button({
 
   const variants = {
     primary:
-      "bg-deep-espresso hover:bg-muted-slate text-white shadow-lg shadow-deep-espresso/10 hover:-translate-y-0.5",
+      "bg-dark-khaki hover:bg-deep-espresso text-white shadow-lg shadow-dark-khaki/20 hover:-translate-y-0.5",
 
     secondary:
-      "bg-soft-celadon hover:bg-white text-deep-espresso border border-soft-celadon hover:border-muted-slate/20 shadow-sm",
+      "bg-warm-stone hover:bg-white text-deep-espresso border border-warm-stone hover:border-dark-khaki shadow-sm",
 
     outline:
-      "border border-muted-slate/20 text-deep-espresso hover:bg-muted-slate hover:text-white",
+      "border border-warm-stone text-deep-espresso hover:bg-dark-khaki hover:text-white",
   };
 
   return (

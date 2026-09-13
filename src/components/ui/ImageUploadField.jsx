@@ -44,12 +44,12 @@ export default function ImageUploadField({
 
   return (
     <div>
-      <label className="block text-sm font-semibold mb-2 text-white">
+      <label className="block text-sm font-semibold mb-2 text-deep-espresso ">
         {label}
       </label>
 
       <div
-        className="relative group cursor-pointer rounded-xl border-2 border-dashed border-slate-700 bg-slate-800/50 overflow-hidden transition hover:border-indigo-500"
+        className="relative group cursor-pointer rounded-xl border-2 border-dashed border-warm-stone bg-white overflow-hidden transition hover:border-dark-khaki"
         onClick={() => !isUploading && inputRef.current?.click()}
       >
         {previewUrl ? (
@@ -69,20 +69,20 @@ export default function ImageUploadField({
             {isUploading && (
               <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
                 <div className="flex flex-col items-center gap-2">
-                  <div className="h-8 w-8 animate-spin rounded-full border-4 border-indigo-500 border-t-transparent" />
+                  <div className="h-8 w-8 animate-spin rounded-full border-4 border-dark-khaki border-t-transparent" />
                   <p className="text-xs text-white">Uploading...</p>
                 </div>
               </div>
             )}
           </div>
         ) : (
-          <div className="flex h-40 flex-col items-center justify-center gap-3 text-slate-400">
+          <div className="flex h-40 flex-col items-center justify-center gap-3 text-black/60">
             {isUploading ? (
-              <div className="h-8 w-8 animate-spin rounded-full border-4 border-indigo-500 border-t-transparent" />
+              <div className="h-8 w-8 animate-spin rounded-full border-4 border-dark-khaki border-t-transparent" />
             ) : (
               <>
                 <svg
-                  className="h-10 w-10 text-slate-600"
+                  className="h-10 w-10 text-black/40"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -95,7 +95,7 @@ export default function ImageUploadField({
                   />
                 </svg>
                 <p className="text-sm">Click to upload image</p>
-                <p className="text-xs text-slate-600">
+                <p className="text-xs text-black/40">
                   {aspectHint} · JPG, PNG, WEBP
                 </p>
               </>
