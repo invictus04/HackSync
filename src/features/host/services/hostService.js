@@ -223,3 +223,18 @@ export async function assignSuperJudge(hackathonId, judgeEmail) {
     );
   }
 }
+
+
+// AI Description Generator
+export async function generateDescription(formData) {
+  try {
+    const response = await api.post("/host/hackathon/generate-description", formData);
+    return response.data.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || "Failed to generate description.",
+      { cause: error },
+    );
+  }
+}
+  

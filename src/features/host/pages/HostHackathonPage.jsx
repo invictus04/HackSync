@@ -12,6 +12,9 @@ import HostStep3Review from "../components/HostStep3Review";
 
 import { setStep, setErrors, setSubmitting, resetForm } from "../redux/hostSlice";
 import { createHackathon } from "../services/hostService";
+import AIDescriptionModal from "../components/AIDescriptionModal";
+import { Sparkles } from "lucide-react";
+import { useState } from "react";
 
 const STEPS = [
     { number: 1, label: "Basic Info" },
@@ -75,6 +78,7 @@ export default function HostHackathonPage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { step, totalSteps, formData } = useSelector((s) => s.host);
+    const [isAIModalOpen, setIsAIModalOpen] = useState(false);
 
     function handleNext() {
         const errors = validateStep(step, formData);
@@ -135,12 +139,20 @@ export default function HostHackathonPage() {
             <div className="py-12 mx-auto max-w-3xl px-5">
 
                 {/* Header */}
-                <div className="mb-10">
-                    <p className="text-deep-espresso text-sm font-semibold uppercase tracking-wider mb-2">Host</p>
-                    <h1 className="text-4xl font-bold text-dark-khaki">Create a Hackathon</h1>
-                    <p className="mt-3 text-black/60">
-                        Fill in the details below to submit your hackathon for platform review.
-                    </p>
+                <div className="mb-10 flex items-start justify-between">
+                    <div>
+                        <p className="text-deep-espresso text-sm font-semibold uppercase tracking-wider mb-2">Host</p>
+                        <h1 className="text-4xl font-bold text-dark-khaki">Create a Hackathon</h1>
+                        <p className="mt-3 text-black/60">
+                            Fill in the details below to submit your hackathon for platform review.
+                        </p>
+                    </div>
+                    <button 
+                        onClick={() => setIsAIModalOpen(true)}
+                        className="flex items-center gap-2 rounded-xl bg-dark-khaki px-4 py-2 text-sm font-semibold text-white hover:bg-deep-espresso transition-colors shadow-sm"
+                    >
+                        <Sparkles className="h-4 w-4" /> AI Generator
+                    </button>
                 </div>
 
                 {/* Step Indicator */}
@@ -199,6 +211,11 @@ export default function HostHackathonPage() {
                     )}
                 </div>
             </div>
+            
+            <AIDescriptionModal 
+                isOpen={isAIModalOpen} 
+                onClose={() => setIsAIModalOpen(false)} 
+            />
         </div>
     );
 }

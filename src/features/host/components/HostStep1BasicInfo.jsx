@@ -1,4 +1,4 @@
-// src/features/hackathons/components/HostStep1BasicInfo.jsx 
+
 import { useDispatch, useSelector } from "react-redux";
 import { updateFormData } from "../redux/hostSlice";
 import ImageUploadField from "../../../components/ui/ImageUploadField";
@@ -10,14 +10,13 @@ export default function HostStep1BasicInfo() {
   }
   return (
     <div className="space-y-6">
-      {" "}
-      {/* Title */}
+
       <div>
-        {" "}
+      
         <label className="block text-sm font-semibold mb-2 text-deep-espresso">
-          {" "}
-          Hackathon Title <span className="text-red-400">*</span>{" "}
-        </label>{" "}
+        
+          Hackathon Title <span className="text-red-400">*</span>
+        </label>
         <input
           type="text"
           value={formData.title}
@@ -25,21 +24,20 @@ export default function HostStep1BasicInfo() {
           placeholder="e.g., AI Innovation Challenge 2026"
           maxLength={100}
           className="w-full rounded-xl border border-warm-stone bg-white px-4 py-3 text-deep-espresso placeholder-black/40 outline-none transition focus:border-dark-khaki"
-        />{" "}
+        />
         <p className="mt-1 text-xs text-black/60">
           {formData.title.length}/100
-        </p>{" "}
+        </p>
         {errors.title && (
           <p className="mt-1 text-xs text-red-400">{errors.title}</p>
-        )}{" "}
-      </div>{" "}
-      {/* Tagline */}{" "}
+        )}
+      </div>
       <div>
-        {" "}
+      
         <label className="block text-sm font-semibold mb-2 text-deep-espresso">
-          {" "}
-          Tagline <span className="text-red-400">*</span>{" "}
-        </label>{" "}
+         
+          Tagline <span className="text-red-400">*</span>
+        </label>
         <input
           type="text"
           value={formData.tagline}
@@ -47,21 +45,21 @@ export default function HostStep1BasicInfo() {
           placeholder="e.g., Innovate. Build. Compete."
           maxLength={160}
           className="w-full rounded-xl border border-warm-stone bg-white px-4 py-3 text-deep-espresso placeholder-black/40 outline-none transition focus:border-dark-khaki"
-        />{" "}
+        />
         <p className="mt-1 text-xs text-black/60">
           {formData.tagline.length}/160
-        </p>{" "}
+        </p>
         {errors.tagline && (
           <p className="mt-1 text-xs text-red-400">{errors.tagline}</p>
-        )}{" "}
-      </div>{" "}
-      {/* Description */}{" "}
+        )}
+      </div>
+    
       <div>
-        {" "}
+       
         <label className="block text-sm font-semibold mb-2 text-deep-espresso">
-          {" "}
-          Full Description <span className="text-red-400">*</span>{" "}
-        </label>{" "}
+       
+          Full Description <span className="text-red-400">*</span>
+        </label>
         <textarea
           value={formData.description}
           onChange={(e) => handleChange("description", e.target.value)}
@@ -69,21 +67,21 @@ export default function HostStep1BasicInfo() {
           rows={5}
           maxLength={2000}
           className="w-full resize-none rounded-xl border border-warm-stone bg-white px-4 py-3 text-deep-espresso placeholder-black/40 outline-none transition focus:border-dark-khaki"
-        />{" "}
+        />
         <p className="mt-1 text-xs text-black/60">
           {formData.description.length}/2000
-        </p>{" "}
+        </p>
         {errors.description && (
           <p className="mt-1 text-xs text-red-400">{errors.description}</p>
-        )}{" "}
-      </div>{" "}
-      {/* FAQ */}{" "}
+        )}
+      </div>
+      
       <div>
-        {" "}
+        
         <label className="block text-sm font-semibold mb-2 text-deep-espresso">
-          {" "}
-          FAQ <span className="text-red-400">*</span>{" "}
-        </label>{" "}
+       
+          FAQ <span className="text-red-400">*</span>
+        </label>
         <textarea
           value={formData.faq}
           onChange={(e) => handleChange("faq", e.target.value)}
@@ -91,21 +89,21 @@ export default function HostStep1BasicInfo() {
           rows={4}
           maxLength={1000}
           className="w-full resize-none rounded-xl border border-warm-stone bg-white px-4 py-3 text-deep-espresso placeholder-black/40 outline-none transition focus:border-dark-khaki"
-        />{" "}
+        />
         <p className="mt-1 text-xs text-black/60">
           {formData.faq?.length || 0}/1000
-        </p>{" "}
+        </p>
         {errors.faq && (
           <p className="mt-1 text-xs text-red-400">{errors.faq}</p>
-        )}{" "}
-      </div>{" "}
-      {/* Rules */}{" "}
+        )}
+      </div>
+      
       <div>
-        {" "}
+        
         <label className="block text-sm font-semibold mb-2 text-deep-espresso">
-          {" "}
-          Rules <span className="text-red-400">*</span>{" "}
-        </label>{" "}
+       
+          Rules <span className="text-red-400">*</span>
+        </label>
         <textarea
           value={formData.rules}
           onChange={(e) => handleChange("rules", e.target.value)}

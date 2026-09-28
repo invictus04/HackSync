@@ -1,91 +1,88 @@
-// ./src/features/agent/components/ChatInput.jsx import { useState, useRef, useEffect } from "react";
-import { FiSend } from "react-icons/fi";
+import { useState, useRef, useEffect, useLayoutEffect } from "react";
+import { FiArrowUp } from "react-icons/fi";
+
+const MAX_HEIGHT = 160;
+
 const ChatInput = ({ onSend, disabled = false }) => {
   const [message, setMessage] = useState("");
   const inputRef = useRef(null);
+
+  const canSend = message.trim().length > 0 && !disabled;
+
+  // Focus again whenever the input becomes available
   useEffect(() => {
-    if (!disabled) {
-      inputRef.current?.focus();
-    }
+    if (!disabled) inputRef.current?.focus();
   }, [disabled]);
+
+  // Grow with content, up to MAX_HEIGHT
+  useLayoutEffect(() => {
+    const el = inputRef.current;
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = `${Math.min(el.scrollHeight, MAX_HEIGHT)}px`;
+  }, [message]);
+
   const handleSubmit = async (event) => {
     if (event) event.preventDefault();
-    const trimmedMessage = message.trim();
-    if (!trimmedMessage || disabled) return;
+    const trimmed = message.trim();
+    if (!trimmed || disabled) return;
     setMessage("");
-    await onSend(trimmedMessage);
+    try {
+      await onSend(trimmed);
+    } catch {
+      setMessage(trimmed); // give the text back if sending failed
+    }
   };
+
   const handleKeyDown = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
+    // Ignore Enter while an IME (e.g. Japanese, Chinese) is composing
+    if (e.key === "Enter" && !e.shiftKey && !e.nativeEvent.isComposing) {
       e.preventDefault();
       handleSubmit();
     }
   };
+
   return (
-    <form onSubmit={handleSubmit} className="relative flex items-center">
-      {" "}
-      <div className="relative flex w-full items-center">
-        {" "}
+    <form onSubmit={handleSubmit} className="w-full">
+      <div
+        className={`flex items-end gap-2 rounded-3xl border border-neutral-200 bg-white p-2 pl-5 shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-[border-color,box-shadow] duration-200 focus-within:border-neutral-300 focus-within:shadow-[0_4px_20px_rgba(0,0,0,0.06)] ${disabled ? "opacity-70" : ""
+          }`}
+      >
         <textarea
           ref={inputRef}
-          rows="1"
+          rows={1}
           value={message}
-          onChange={(event) => setMessage(event.target.value)}
+          onChange={(e) => setMessage(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Ask anything... (Press Enter to send)"
+          placeholder="Ask anything"
+          aria-label="Message"
           disabled={disabled}
-          className="w-full resize-none rounded-2xl border bg-white px-5 py-4 pr-16 text-sm text-[#38302E] shadow-sm outline-none transition-all placeholder:text-[#6F6866]"
-          style={{
-            minHeight: "56px",
-            maxHeight: "120px",
-            borderColor: "rgba(120, 133, 133, 0.4)",
-          }}
-          onFocus={(e) => {
-            e.target.style.borderColor = "#9CAEA9";
-            e.target.style.boxShadow = "0 0 0 4px rgba(156, 174, 169, 0.15)";
-          }}
-          onBlur={(e) => {
-            e.target.style.borderColor = "rgba(120, 133, 133, 0.4)";
-            e.target.style.boxShadow = "none";
-          }}
-        />{" "}
+          className="min-h-[40px] flex-1 resize-none bg-transparent py-2.5 text-[15px] leading-5 text-neutral-900 outline-none placeholder:text-neutral-400 disabled:cursor-not-allowed"
+          style={{ maxHeight: MAX_HEIGHT }}
+        />
+
         <button
           type="submit"
-          disabled={disabled || !message.trim()}
-          className="absolute right-2 flex h-10 w-10 items-center justify-center rounded-xl transition-all disabled:cursor-not-allowed"
-          style={{
-            background:
-              disabled || !message.trim()
-                ? "rgba(120, 133, 133, 0.1)"
-                : "#9CAEA9",
-            color: disabled || !message.trim() ? "#788585" : "#38302E",
-          }}
-          onMouseEnter={(e) => {
-            if (!disabled && message.trim()) {
-              e.currentTarget.style.background = "#788585";
-              e.currentTarget.style.color = "#FFFFFF";
-              e.currentTarget.style.transform = "translateY(-2px)";
-            }
-          }}
-          onMouseLeave={(e) => {
-            if (!disabled && message.trim()) {
-              e.currentTarget.style.background = "#9CAEA9";
-              e.currentTarget.style.color = "#38302E";
-              e.currentTarget.style.transform = "translateY(0)";
-            }
-          }}
+          disabled={!canSend}
+          aria-label={disabled ? "Waiting for response" : "Send message"}
+          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2 ${canSend
+              ? "bg-neutral-900 text-white hover:bg-neutral-700 active:scale-95"
+              : "cursor-not-allowed bg-neutral-100 text-neutral-400"
+            }`}
         >
-          {" "}
-          {disabled && !message.trim() ? (
-            <FiSend className="ml-0.5 h-4 w-4" />
-          ) : disabled ? (
-            <div className="h-4 w-4 animate-spin rounded-full border-2 border-[rgba(120,133,133,0.3)] border-t-[#38302E]" />
+          {disabled ? (
+            <span className="h-4 w-4 animate-spin rounded-full border-2 border-neutral-300 border-t-neutral-600" />
           ) : (
-            <FiSend className="ml-0.5 h-4 w-4" />
-          )}{" "}
-        </button>{" "}
-      </div>{" "}
+            <FiArrowUp className="h-[18px] w-[18px]" strokeWidth={2.5} />
+          )}
+        </button>
+      </div>
+
+      <p className="mt-2 text-center text-xs text-neutral-400">
+        Enter to send · Shift + Enter for a new line
+      </p>
     </form>
   );
 };
+
 export default ChatInput;
