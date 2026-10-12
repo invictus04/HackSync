@@ -1,5 +1,3 @@
-// src/features/participant/pages/ProfilePage.jsx
-
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,7 +22,7 @@ const profileSchema = z.object({
     avatarURL: z.string().optional(),
 });
 
-// ─── Input component ──────────────────────────────────────────────────────────
+
 function Field({ label, icon: Icon, error, hint, ...props }) {
     return (
         <div>
@@ -50,7 +48,7 @@ function Field({ label, icon: Icon, error, hint, ...props }) {
     );
 }
 
-// ─── Avatar uploader ──────────────────────────────────────────────────────────
+
 function AvatarUploader({ currentUrl, onUpload }) {
     const [isUploading, setIsUploading] = useState(false);
 
@@ -307,8 +305,7 @@ export default function ProfilePage() {
                             </div>
                         )}
                     </div>
-                ) : (
-                    // ─── EDIT / CREATE MODE ─────────────────────────────────────────
+                ) : 
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
 
                         {/* Avatar */}

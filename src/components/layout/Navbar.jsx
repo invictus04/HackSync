@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router";
 import { FaUser, FaSignOutAlt } from "react-icons/fa";
@@ -29,11 +28,10 @@ function UserProfileDropdown({ handleLogout, goToDashboard }) {
 
   return (
     <div className="relative" ref={dropdownRef}>
-      {/* Avatar circle */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center justify-center cursor-pointer transition-all duration-300 w-9 h-9 rounded-xl border border-muted-slate/20 text-sm font-semibold ${
-          isOpen ? "bg-soft-celadon text-deep-espresso" : "bg-pale-mint/30 text-deep-espresso hover:bg-pale-mint/60"
+        className={`flex items-center justify-center cursor-pointer transition-all duration-300 w-9 h-9 rounded-xl border border-dark-khaki/30 text-sm font-semibold ${
+          isOpen ? "bg-dark-khaki text-corn-silk" : "bg-corn-silk/50 text-deep-espresso hover:bg-dark-khaki/20"
         }`}
       >
         <FaUser size={14} />
@@ -41,14 +39,14 @@ function UserProfileDropdown({ handleLogout, goToDashboard }) {
 
       {isOpen && (
         <div
-          className="absolute right-0 mt-3 w-56 rounded-2xl py-2 z-50 transition-all bg-deep-espresso border border-pale-mint/15 shadow-[0_20px_40px_rgba(0,0,0,0.4)]"
+          className="absolute right-0 mt-3 w-56 rounded-2xl py-2 z-50 transition-all bg-corn-silk border border-dark-khaki/30 shadow-[0_20px_40px_rgba(56,48,46,0.15)]"
         >
           {cleanRole && (
             <div
-              className="px-4 py-3 border-b border-pale-mint/10"
+              className="px-4 py-3 border-b border-dark-khaki/20"
             >
               <span
-                className="text-[11px] font-bold uppercase tracking-widest text-white"
+                className="text-[11px] font-bold uppercase tracking-widest text-dark-khaki"
               >
                 {cleanRole}
               </span>
@@ -61,7 +59,7 @@ function UserProfileDropdown({ handleLogout, goToDashboard }) {
                 setIsOpen(false);
                 goToDashboard();
               }}
-              className="flex w-full items-center gap-3 px-4 py-2.5 text-[14px] font-medium cursor-pointer transition-colors duration-200 bg-transparent text-white hover:bg-pale-mint/10"
+              className="flex w-full items-center gap-3 px-4 py-2.5 text-[14px] font-semibold cursor-pointer transition-colors duration-200 bg-transparent text-deep-espresso hover:bg-dark-khaki/10"
             >
               Dashboard
             </button>
@@ -69,13 +67,13 @@ function UserProfileDropdown({ handleLogout, goToDashboard }) {
             <Link
               to="/profile"
               onClick={() => setIsOpen(false)}
-              className="flex items-center gap-3 px-4 py-2.5 text-[14px] font-medium transition-colors duration-200 text-white bg-transparent no-underline hover:bg-pale-mint/10"
+              className="flex items-center gap-3 px-4 py-2.5 text-[14px] font-semibold transition-colors duration-200 text-deep-espresso bg-transparent no-underline hover:bg-dark-khaki/10"
             >
               My Profile
             </Link>
           </div>
 
-          <div className="border-t border-pale-mint/10 my-1" />
+          <div className="border-t border-dark-khaki/20 my-1" />
 
           <div className="py-1">
             <button
@@ -83,7 +81,7 @@ function UserProfileDropdown({ handleLogout, goToDashboard }) {
                 setIsOpen(false);
                 handleLogout();
               }}
-              className="flex w-full items-center gap-3 px-4 py-2.5 text-[14px] font-medium cursor-pointer transition-colors duration-200 text-[#ff8080] bg-transparent hover:bg-[#ff8080]/10"
+              className="flex w-full items-center gap-3 px-4 py-2.5 text-[14px] font-semibold cursor-pointer transition-colors duration-200 text-deep-espresso bg-transparent hover:bg-dark-khaki/10"
             >
               <FaSignOutAlt size={12} />
               Sign Out
@@ -94,7 +92,6 @@ function UserProfileDropdown({ handleLogout, goToDashboard }) {
     </div>
   );
 }
-
 
 export default function Navbar({ hideLinks = false }) {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -107,7 +104,6 @@ export default function Navbar({ hideLinks = false }) {
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
-    // Set initial state
     setScrolled(window.scrollY > 20);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -144,7 +140,7 @@ export default function Navbar({ hideLinks = false }) {
       <header
         className={`sticky top-0 z-50 transition-all duration-500 ease-in-out ${
           scrolled
-            ? "bg-white/85 backdrop-blur-md border-b border-muted-slate/15 pt-0"
+            ? "bg-corn-silk/85 backdrop-blur-md border-b border-dark-khaki/30 pt-0"
             : isHackathonDetails
             ? "bg-white border-b border-transparent pt-3"
             : "bg-transparent border-b border-transparent pt-3"
@@ -155,7 +151,6 @@ export default function Navbar({ hideLinks = false }) {
             className="flex items-center justify-between transition-all duration-500"
             style={{ height: scrolled ? 64 : 76 }}
           >
-            {/* ── Logo ── */}
             <Link
               to="/"
               className="flex items-center select-none"
@@ -166,31 +161,30 @@ export default function Navbar({ hideLinks = false }) {
                 style={{ fontFamily: "'Space Grotesk', sans-serif" }}
               >
                 Hack
-                <span className="text-muted-slate font-medium">Sync</span>
+                <span className="text-dark-khaki font-medium">Sync</span>
               </span>
             </Link>
 
-            {/* ── Desktop Links ── */}
             {displayLinks.length > 0 && (
               <div
                 className={`hidden md:flex items-center rounded-full px-2 gap-2 ${
                   scrolled
                     ? "bg-transparent border-none p-0"
-                    : "bg-white/40 border border-white/60 py-1.5 px-3"
+                    : "bg-corn-silk/40 border border-dark-khaki/20 py-1.5 px-3"
                 }`}
               >
                 {displayLinks.map((link) => {
                   const active = isActive(link.path);
                   return (
-                    <Link
+                     <Link
                       key={link.name}
                       to={link.path}
                       className={`relative transition-all duration-300 text-sm py-1.5 px-4 rounded-[20px] no-underline ${
                         active
-                          ? `font-semibold text-deep-espresso bg-white ${
-                              !scrolled ? "shadow-[0_2px_8px_rgba(56,48,46,0.05)]" : ""
+                          ? `font-bold text-corn-silk bg-dark-khaki ${
+                              !scrolled ? "shadow-[0_2px_8px_rgba(56,48,46,0.15)]" : ""
                             }`
-                          : "font-medium text-warm-stone bg-transparent hover:text-deep-espresso hover:bg-white/60"
+                          : "font-semibold text-dark-khaki bg-transparent hover:text-deep-espresso hover:bg-dark-khaki/10"
                       }`}
                     >
                       {link.name}
@@ -200,7 +194,6 @@ export default function Navbar({ hideLinks = false }) {
               </div>
             )}
 
-            {/* ── Desktop Actions ── */}
             <div
               className="hidden md:flex items-center"
               style={{ gap: "16px" }}
@@ -209,7 +202,7 @@ export default function Navbar({ hideLinks = false }) {
                 <>
                   <button
                     onClick={goToDashboard}
-                    className="cursor-pointer transition-all duration-300 py-2 px-5 rounded-xl text-sm font-semibold text-white bg-deep-espresso border-none shadow-[0_4px_14px_rgba(56,48,46,0.15)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(56,48,46,0.25)]"
+                    className="cursor-pointer transition-all duration-300 py-2.5 px-6 rounded-xl text-sm font-bold text-corn-silk bg-dark-khaki border-none shadow-[0_4px_14px_rgba(56,48,46,0.15)] hover:bg-deep-espresso hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(56,48,46,0.25)]"
                   >
                     Dashboard
                   </button>
@@ -222,13 +215,13 @@ export default function Navbar({ hideLinks = false }) {
                 <>
                   <button
                     onClick={() => navigate("/login")}
-                    className="cursor-pointer transition-colors duration-200 py-2 px-4 text-sm font-semibold text-warm-stone bg-transparent border-none hover:text-deep-espresso"
+                    className="cursor-pointer transition-colors duration-200 py-2 px-4 text-sm font-bold text-dark-khaki bg-transparent border-none hover:text-deep-espresso"
                   >
                     Log in
                   </button>
                   <button
                     onClick={() => navigate("/register")}
-                    className="cursor-pointer transition-all duration-300 py-2.5 px-6 rounded-xl text-sm font-semibold text-white bg-deep-espresso border-none shadow-[0_4px_14px_rgba(156,174,169,0.2)] hover:-translate-y-0.5  hover:shadow-[0_6px_20px_rgba(120,133,133,0.3)]"
+                    className="cursor-pointer transition-all duration-300 py-2.5 px-6 rounded-xl text-sm font-bold text-corn-silk bg-dark-khaki border-none shadow-[0_4px_14px_rgba(56,48,46,0.15)] hover:bg-deep-espresso hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(56,48,46,0.25)]"
                   >
                     Get Started
                   </button>
@@ -236,9 +229,8 @@ export default function Navbar({ hideLinks = false }) {
               )}
             </div>
 
-            {/* ── Mobile Toggle ── */}
             <button
-              className="md:hidden flex items-center justify-center cursor-pointer transition-colors bg-white border border-muted-slate/20 rounded-lg text-deep-espresso text-base py-2 px-2.5"
+              className="md:hidden flex items-center justify-center cursor-pointer transition-colors bg-corn-silk border border-dark-khaki/30 rounded-lg text-deep-espresso text-base py-2 px-2.5 hover:bg-dark-khaki/10"
               onClick={() => setMobileOpen(!mobileOpen)}
             >
               {mobileOpen ? "✕" : "☰"}
@@ -247,15 +239,14 @@ export default function Navbar({ hideLinks = false }) {
         </Container>
       </header>
 
-      {/* ── Mobile Menu ── */}
       {mobileOpen && (
         <>
           <div
-            className="fixed inset-0 z-40 md:hidden bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 z-40 md:hidden bg-deep-espresso/60 backdrop-blur-sm"
             onClick={() => setMobileOpen(false)}
           />
           <div
-            className="fixed top-[80px] left-4 right-4 z-50 md:hidden rounded-2xl overflow-hidden transition-all bg-deep-espresso border border-pale-mint/15 shadow-[0_24px_60px_rgba(0,0,0,0.5)]"
+            className="fixed top-[80px] left-4 right-4 z-50 md:hidden rounded-2xl overflow-hidden transition-all bg-corn-silk border border-dark-khaki/30 shadow-[0_24px_60px_rgba(56,48,46,0.5)]"
           >
             <div className="p-5 flex flex-col gap-2">
               {displayLinks.map((link) => {
@@ -265,10 +256,10 @@ export default function Navbar({ hideLinks = false }) {
                     key={link.name}
                     to={link.path}
                     onClick={() => setMobileOpen(false)}
-                    className={`block rounded-xl transition-colors duration-200 py-3 px-4 text-[15px] font-semibold no-underline ${
+                    className={`block rounded-xl transition-colors duration-200 py-3 px-4 text-[15px] font-bold no-underline ${
                       active
-                        ? "text-deep-espresso bg-pale-mint"
-                        : "text-pale-mint bg-transparent"
+                        ? "text-corn-silk bg-dark-khaki"
+                        : "text-deep-espresso bg-transparent hover:bg-dark-khaki/10"
                     }`}
                   >
                     {link.name}
@@ -276,7 +267,7 @@ export default function Navbar({ hideLinks = false }) {
                 );
               })}
 
-              <div className="border-t border-pale-mint/10 my-3" />
+              <div className="border-t border-dark-khaki/20 my-3" />
 
               {isAuthenticated ? (
                 <div className="flex flex-col gap-2.5">
@@ -285,7 +276,7 @@ export default function Navbar({ hideLinks = false }) {
                       setMobileOpen(false);
                       goToDashboard();
                     }}
-                    className="w-full cursor-pointer transition-colors py-3 rounded-xl text-[15px] font-semibold text-deep-espresso bg-pale-mint border-none text-center"
+                    className="w-full cursor-pointer transition-colors duration-200 py-3 rounded-xl text-[15px] font-bold text-corn-silk bg-dark-khaki border-none text-center hover:bg-deep-espresso"
                   >
                     Dashboard
                   </button>
@@ -294,7 +285,7 @@ export default function Navbar({ hideLinks = false }) {
                       setMobileOpen(false);
                       handleLogout();
                     }}
-                    className="w-full cursor-pointer transition-colors py-3 rounded-xl text-[15px] font-semibold text-[#ff8080] bg-[#ff8080]/10 border border-[#ff8080]/20 text-center"
+                    className="w-full cursor-pointer transition-colors duration-200 py-3 rounded-xl text-[15px] font-bold text-deep-espresso bg-dark-khaki/10 border border-dark-khaki/20 text-center hover:bg-dark-khaki/20"
                   >
                     Sign Out
                   </button>
@@ -306,7 +297,7 @@ export default function Navbar({ hideLinks = false }) {
                       setMobileOpen(false);
                       navigate("/login");
                     }}
-                    className="w-full cursor-pointer transition-colors py-3 rounded-xl text-[15px] font-semibold text-pale-mint bg-pale-mint/5 border border-pale-mint/10 text-center"
+                    className="w-full cursor-pointer transition-colors duration-200 py-3 rounded-xl text-[15px] font-bold text-deep-espresso bg-dark-khaki/10 border border-dark-khaki/20 text-center hover:bg-dark-khaki/20"
                   >
                     Log in
                   </button>
@@ -315,7 +306,7 @@ export default function Navbar({ hideLinks = false }) {
                       setMobileOpen(false);
                       navigate("/register");
                     }}
-                    className="w-full cursor-pointer transition-all py-3 rounded-xl text-[15px] font-semibold text-deep-espresso bg-pale-mint border-none text-center"
+                    className="w-full cursor-pointer transition-colors duration-200 py-3 rounded-xl text-[15px] font-bold text-corn-silk bg-dark-khaki border-none text-center hover:bg-deep-espresso"
                   >
                     Get Started
                   </button>

@@ -1,14 +1,15 @@
-// src/features/workspace/pages/ParticipantSubmissionPage.jsx import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "react-toastify";
-import { FaGithub, FaGlobe, FaYoutube, FaCheckCircle } from "react-icons/fa";
+import { FaGithub, FaGlobe, FaYoutube, FaCheckCircle, FaExclamationCircle, FaUsers } from "react-icons/fa";
 import {
   getMyHackathonDetails,
   submitProject,
-} from "../../participant/services/participantService"; // ─── Schema ───────────────────────────────────────────────────────────────────
+} from "../../participant/services/participantService";
+
 const submissionSchema = z.object({
   projectTitle: z.string().min(1, "Project title is required."),
   tagLine: z.string().min(1, "Tagline is required."),
@@ -31,74 +32,71 @@ const submissionSchema = z.object({
     .optional()
     .or(z.literal("")),
 });
+
 const inputClass =
-  "w-full rounded-xl border border-[#788585]/30 bg-white px-4 py-3 text-sm text-[#38302E] placeholder-slate-500 outline-none transition focus:border-[#9CAEA9] focus:ring-2 focus:ring-[#9CAEA9]/20";
+  "w-full rounded-xl border border-dark-khaki/30 bg-white px-4 py-3 text-sm text-deep-espresso placeholder-dark-khaki/60 outline-none transition focus:border-dark-khaki focus:ring-2 focus:ring-dark-khaki/20";
+
 function Field({ label, icon: Icon, error, hint, textarea, ...rest }) {
   return (
     <div>
-      {" "}
-      <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-[#6F6866]">
-        {" "}
-        {Icon && <Icon size={13} className="text-[#6F6866]" />} {label}{" "}
-      </label>{" "}
+      <label className="mb-1.5 flex items-center gap-1.5 text-sm font-semibold text-deep-espresso">
+        {Icon && <Icon size={14} className="text-dark-khaki" />} {label}
+      </label>
       {textarea ? (
         <textarea rows={4} className={inputClass} {...rest} />
       ) : (
         <input className={inputClass} {...rest} />
-      )}{" "}
-      {hint && !error && <p className="mt-1 text-xs text-[#6F6866]">{hint}</p>}{" "}
-      {error && <p className="mt-1 text-xs text-red-400">{error}</p>}{" "}
+      )}
+      {hint && !error && <p className="mt-1 text-xs text-dark-khaki font-medium">{hint}</p>}
+      {error && <p className="mt-1 text-xs text-red-500 font-medium">{error}</p>}
     </div>
   );
-} // ─── Success panel ────────────────────────────────────────────────────────────
+}
+
 function SuccessPanel({ submission }) {
   return (
-    <div className="rounded-2xl border border-emerald-800/40 bg-emerald-900/20 p-6 text-center">
-      {" "}
-      <FaCheckCircle className="mx-auto mb-3 text-emerald-400" size={36} />{" "}
-      <h2 className="text-xl font-bold text-[#38302E]">Project Submitted!</h2>{" "}
-      <p className="mt-2 text-sm text-[#6F6866]">
+    <div className="rounded-2xl border border-dark-khaki/30 bg-corn-silk p-6 text-center shadow-sm">
+      <FaCheckCircle className="mx-auto mb-3 text-dark-khaki" size={36} />
+      <h2 className="text-xl font-black text-deep-espresso">Project Submitted!</h2>
+      <p className="mt-2 text-sm text-dark-khaki font-medium">
         Your project has been submitted successfully.
-      </p>{" "}
-      <div className="mt-6 rounded-xl border border-[#788585]/30 bg-white/60 p-4 text-left space-y-2">
-        {" "}
-        <p className="text-xs text-[#6F6866]">
+      </p>
+      <div className="mt-6 rounded-xl border border-dark-khaki/20 bg-white p-4 text-left space-y-2">
+        <p className="text-xs font-bold uppercase tracking-widest text-dark-khaki">
           Submission ID #{submission.projectSubmissionId}
-        </p>{" "}
-        <p className="text-lg font-bold text-[#38302E]">
+        </p>
+        <p className="text-lg font-black text-deep-espresso">
           {submission.projectTitle}
-        </p>{" "}
-        <p className="text-sm text-indigo-300 italic">{submission.tagLine}</p>{" "}
+        </p>
+        <p className="text-sm text-dark-khaki font-medium italic">{submission.tagLine}</p>
         {submission.githubRepoUrl && (
           <a
             href={submission.githubRepoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-sm text-blue-400 hover:underline"
+            className="flex items-center gap-1.5 text-sm font-semibold text-dark-khaki hover:text-deep-espresso hover:underline"
           >
-            {" "}
-            <FaGithub size={13} /> GitHub Repository{" "}
+            <FaGithub size={14} /> GitHub Repository
           </a>
-        )}{" "}
+        )}
         {submission.liveDemoUrl && (
           <a
             href={submission.liveDemoUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-sm text-blue-400 hover:underline"
+            className="flex items-center gap-1.5 text-sm font-semibold text-dark-khaki hover:text-deep-espresso hover:underline"
           >
-            {" "}
-            <FaGlobe size={13} /> Live Demo{" "}
+            <FaGlobe size={14} /> Live Demo
           </a>
-        )}{" "}
-        <div className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-emerald-900/40 border border-emerald-700/40 px-3 py-1 text-xs font-semibold text-emerald-300">
-          {" "}
-          Status: {submission.submissionStatus}{" "}
-        </div>{" "}
-      </div>{" "}
+        )}
+        <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-corn-silk border border-dark-khaki/30 px-3 py-1 text-xs font-bold text-deep-espresso">
+          Status: {submission.submissionStatus}
+        </div>
+      </div>
     </div>
   );
-} // ─── Main export ──────────────────────────────────────────────────────────────
+}
+
 export function ParticipantSubmissionPage() {
   const { id } = useParams();
   const [teamId, setTeamId] = useState(null);
@@ -110,6 +108,7 @@ export function ParticipantSubmissionPage() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm({ resolver: zodResolver(submissionSchema) });
+
   useEffect(() => {
     getMyHackathonDetails(id)
       .then((data) => {
@@ -126,6 +125,7 @@ export function ParticipantSubmissionPage() {
       .catch((err) => toast.error(err.message))
       .finally(() => setIsLoadingTeam(false));
   }, [id]);
+
   async function onSubmit(data) {
     if (!teamId) {
       toast.error(
@@ -141,88 +141,82 @@ export function ParticipantSubmissionPage() {
       toast.error(err.message);
     }
   }
+
   const isCompleted = hackathonStatus === "COMPLETED";
+
   return (
     <div>
-      {" "}
       <div className="mb-6">
-        {" "}
-        <p className="text-sm font-semibold uppercase tracking-widest text-[#9CAEA9]">
+        <p className="text-sm font-bold uppercase tracking-widest text-dark-khaki">
           Participant
-        </p>{" "}
-        <h1 className="mt-1 text-2xl font-bold text-[#38302E]">
+        </p>
+        <h1 className="mt-1 text-3xl font-black text-deep-espresso">
           Project Submission
-        </h1>{" "}
-        <p className="mt-1 text-sm text-[#6F6866]">
+        </h1>
+        <p className="mt-1 text-sm font-medium text-dark-khaki">
           Submit your team's final project for judging.
-        </p>{" "}
-      </div>{" "}
+        </p>
+      </div>
       {isLoadingTeam ? (
         <div className="animate-pulse space-y-4">
-          {" "}
           {[1, 2, 3].map((k) => (
             <div
               key={k}
-              className="h-16 rounded-xl bg-white border border-[#788585]/30"
+              className="h-16 rounded-xl bg-corn-silk/30 border border-corn-silk"
             />
-          ))}{" "}
+          ))}
         </div>
       ) : !teamId ? (
-        <div className="rounded-2xl border border-amber-800/40 bg-amber-900/10 p-6 text-center">
-          {" "}
-          <p className="text-amber-300 font-semibold">
-            You need a team to submit a project.
-          </p>{" "}
-          <p className="mt-1 text-sm text-[#6F6866]">
-            Please create or join a team first from the Team tab.
-          </p>{" "}
+        <div className="rounded-2xl border-2 border-dashed border-dark-khaki/30 bg-corn-silk/20 p-8 text-center shadow-sm">
+          <FaUsers className="mx-auto mb-4 text-dark-khaki" size={32} />
+          <p className="text-lg font-black text-deep-espresso mb-2">
+            Team Required
+          </p>
+          <p className="mt-1 text-sm font-medium text-dark-khaki">
+            Please create or join a team from the Team tab before submitting.
+          </p>
         </div>
       ) : submission ? (
         <SuccessPanel submission={submission} />
       ) : isCompleted ? (
-        <div className="rounded-2xl border border-amber-800/40 bg-amber-900/10 p-6 text-center">
-          {" "}
-          <p className="text-amber-300 font-semibold">
-            This hackathon has ended.
-          </p>{" "}
-          <p className="mt-1 text-sm text-[#6F6866]">
+        <div className="rounded-2xl border-2 border-dashed border-dark-khaki/30 bg-corn-silk/20 p-8 text-center shadow-sm">
+          <FaExclamationCircle className="mx-auto mb-4 text-dark-khaki" size={32} />
+          <p className="text-lg font-black text-deep-espresso mb-2">
+            Hackathon Ended
+          </p>
+          <p className="mt-1 text-sm font-medium text-dark-khaki">
             Project submissions are closed.
-          </p>{" "}
+          </p>
         </div>
       ) : (
-        <div className="rounded-2xl border border-[#788585]/30 bg-white p-6">
-          {" "}
+        <div className="rounded-2xl border border-corn-silk bg-white p-6 shadow-sm">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-            {" "}
             <Field
               label="Project Title *"
               type="text"
               placeholder="e.g. EcoChain — Blockchain for sustainability tracking"
               error={errors.projectTitle?.message}
               {...register("projectTitle")}
-            />{" "}
+            />
             <Field
               label="Tagline *"
               type="text"
               placeholder="A one-liner that captures your project"
               error={errors.tagLine?.message}
               {...register("tagLine")}
-            />{" "}
+            />
             <Field
               label="Description *"
               textarea
               placeholder="Describe what you built, the problem it solves, technologies used..."
               error={errors.description?.message}
               {...register("description")}
-            />{" "}
-            <div className="border-t border-[#788585]/30 pt-5">
-              {" "}
-              <p className="mb-4 text-sm font-semibold text-[#6F6866]">
-                Links{" "}
-                <span className="font-normal text-[#6F6866]">(optional)</span>
-              </p>{" "}
+            />
+            <div className="border-t border-corn-silk pt-5">
+              <p className="mb-4 text-sm font-bold text-deep-espresso">
+                Links <span className="font-medium text-dark-khaki">(optional)</span>
+              </p>
               <div className="space-y-4">
-                {" "}
                 <Field
                   label="GitHub Repository"
                   icon={FaGithub}
@@ -230,7 +224,7 @@ export function ParticipantSubmissionPage() {
                   placeholder="https://github.com/your-org/your-repo"
                   error={errors.githubRepoUrl?.message}
                   {...register("githubRepoUrl")}
-                />{" "}
+                />
                 <Field
                   label="Live Demo URL"
                   icon={FaGlobe}
@@ -238,7 +232,7 @@ export function ParticipantSubmissionPage() {
                   placeholder="https://your-demo.vercel.app"
                   error={errors.liveDemoUrl?.message}
                   {...register("liveDemoUrl")}
-                />{" "}
+                />
                 <Field
                   label="YouTube Demo Video"
                   icon={FaYoutube}
@@ -246,26 +240,24 @@ export function ParticipantSubmissionPage() {
                   placeholder="https://youtube.com/watch?v=..."
                   error={errors.youtubeUrl?.message}
                   {...register("youtubeUrl")}
-                />{" "}
-              </div>{" "}
-            </div>{" "}
-            <div className="border-t border-[#788585]/30 pt-5 flex items-center justify-between gap-4">
-              {" "}
-              <p className="text-xs text-[#6F6866]">
+                />
+              </div>
+            </div>
+            <div className="border-t border-corn-silk pt-5 flex items-center justify-between gap-4">
+              <p className="text-xs font-medium text-dark-khaki">
                 Team #{teamId} • Submitting will not block re-submission.
-              </p>{" "}
+              </p>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="rounded-xl bg-[#9CAEA9] px-8 py-3 font-semibold text-[#38302E] transition hover:bg-indigo-500 disabled:opacity-50"
+                className="rounded-xl bg-dark-khaki px-8 py-3 font-bold text-corn-silk transition hover:bg-deep-espresso disabled:opacity-50"
               >
-                {" "}
-                {isSubmitting ? "Submitting..." : "Submit Project"}{" "}
-              </button>{" "}
-            </div>{" "}
-          </form>{" "}
+                {isSubmitting ? "Submitting..." : "Submit Project"}
+              </button>
+            </div>
+          </form>
         </div>
-      )}{" "}
+      )}
     </div>
   );
 }

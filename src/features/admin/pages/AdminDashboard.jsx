@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 import { getAdminMetrics, getPendingHackathons, approveHackathon, rejectHackathon, banUser, unbanUser } from "../services/adminService";
 import Navbar from "../../../components/layout/Navbar";
 
-// ─── Status badge ─────────────────────────────────────────────────────────────
 const STATUS_CONFIG = {
   DRAFT: { color: "bg-yellow-100 text-yellow-800 border-yellow-200", dot: "bg-yellow-500" },
   APPROVED: { color: "bg-purple-100 text-purple-800 border-purple-200", dot: "bg-purple-500" },
@@ -27,7 +26,6 @@ function StatusBadge({ status }) {
   );
 }
 
-// ─── Skeleton components ───────────────────────────────────────────────────────
 function StatSkeleton() {
   return (
     <div className="rounded-2xl border border-warm-stone bg-white p-6 animate-pulse space-y-3">
@@ -53,7 +51,6 @@ function HackathonCardSkeleton() {
   );
 }
 
-// ─── Stat card ─────────────────────────────────────────────────────────────────
 function StatCard({ label, value, sublabel, colorClass = "text-deep-espresso" }) {
   return (
     <div className="rounded-2xl border border-warm-stone bg-white p-6 shadow-sm">
@@ -64,13 +61,12 @@ function StatCard({ label, value, sublabel, colorClass = "text-deep-espresso" })
   );
 }
 
-// ─── Format date helper ────────────────────────────────────────────────────────
 function fmtDate(value) {
   if (!value) return "—";
   return new Date(value).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
 }
 
-// ─── Main Component ────────────────────────────────────────────────────────────
+
 export default function AdminDashboard() {
   const { user } = useSelector((state) => state.auth);
 
@@ -109,10 +105,8 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    loadMetrics();
-     
+    loadMetrics(); 
     loadPending();
-   
   }, []);
 
   async function handleApprove(id) {
@@ -193,7 +187,6 @@ export default function AdminDashboard() {
           </p>
         </div>
 
-        {/* ── Metrics ─────────────────────────────────────────── */}
         <div className="mb-10 grid gap-4 sm:grid-cols-3">
           {loadingMetrics ? (
             <>
@@ -225,7 +218,6 @@ export default function AdminDashboard() {
 
         <div className="grid gap-8 xl:grid-cols-[1fr_340px]">
 
-          {/* ── Hackathon Review Pipeline ────────────────────── */}
           <div>
             <div className="mb-5 flex items-center justify-between">
               <h2 className="text-xl font-bold text-deep-espresso">Review Pipeline</h2>
@@ -268,19 +260,16 @@ export default function AdminDashboard() {
                       )}
                     </div>
 
-                    {/* Description */}
                     <p className="mb-4 text-sm leading-relaxed text-black/60 line-clamp-2">
                       {hackathon.description}
                     </p>
 
-                    {/* Dates */}
                     <div className="mb-4 flex flex-wrap gap-4 text-xs text-black/60">
                       <span>📋 Reg: {fmtDate(hackathon.registrationStart)} → {fmtDate(hackathon.registrationEnd)}</span>
                       <span>🏆 Event: {fmtDate(hackathon.hackathonStart)} → {fmtDate(hackathon.hackathonEnd)}</span>
                       <span>👥 Team: {hackathon.minTeamSize}–{hackathon.maxTeamSize}</span>
                     </div>
 
-                    {/* Actions */}
                     <div className="flex gap-3">
                       <button
                         onClick={() => handleApprove(hackathon.id)}
@@ -303,10 +292,8 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          {/* ── Right sidebar ──────────────────────────────────── */}
           <div className="space-y-6">
 
-            {/* Ban/Unban User */}
             <div className="rounded-xl border border-warm-stone bg-white p-5 shadow-sm">
               <h3 className="font-bold text-deep-espresso mb-1">Ban/Unban User</h3>
               <p className="text-xs text-black/60 mb-4">

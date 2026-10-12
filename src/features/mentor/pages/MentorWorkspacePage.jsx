@@ -29,20 +29,15 @@ export default function MentorWorkspacePage() {
             setResolvedTickets(Array.isArray(resolved) ? resolved : []);
         } catch (error) {
             console.error("Failed to fetch tickets", error);
-            // Don't toast constantly on background refetches
         }
     }, []);
 
     useEffect(() => {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         setIsLoading(true);
         fetchTickets().finally(() => setIsLoading(false));
 
-        // Connect to WebSocket
         webSocketService.connect(() => {
-            // Subscribe to global tickets topic
             webSocketService.subscribe('/topic/tickets', () => {
-                // Add a small delay to ensure backend DB transaction has committed
                 setTimeout(() => {
                     fetchTickets();
                 }, 500);
@@ -86,8 +81,8 @@ export default function MentorWorkspacePage() {
         return (
             <>
                 <Navbar hideLinks={true} />
-                <div className="min-h-screen bg-slate-950 p-8 flex justify-center items-center">
-                    <div className="animate-spin h-12 w-12 border-4 border-indigo-500 border-t-transparent rounded-full"></div>
+                <div className="min-h-screen bg-corn-silk p-8 flex justify-center items-center">
+                    <div className="animate-spin h-12 w-12 border-4 border-dark-khaki border-t-transparent rounded-full"></div>
                 </div>
             </>
         );
@@ -96,21 +91,21 @@ export default function MentorWorkspacePage() {
     return (
         <>
             <Navbar hideLinks={true} />
-            <div className="min-h-screen bg-slate-950 text-white flex flex-col h-screen">
+            <div className="min-h-screen bg-corn-silk text-deep-espresso flex flex-col h-screen">
                 {/* Header */}
-                <div className="border-b border-slate-800 bg-slate-900/50 p-4 shrink-0 flex items-center gap-4">
+                <div className="border-b border-dark-khaki/30 bg-white p-4 shrink-0 flex items-center gap-4">
                     <button
                         onClick={() => navigate(`/mentor/hackathon/${id}`)}
-                        className="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 transition"
+                        className="p-2 rounded-xl bg-corn-silk/50 hover:bg-dark-khaki/10 text-dark-khaki hover:text-deep-espresso transition border border-transparent hover:border-dark-khaki/20"
                     >
                         <FaArrowLeft />
                     </button>
                     <div>
-                        <h1 className="text-xl font-bold">Mentor Workspace</h1>
-                        <p className="text-xs text-slate-400">Real-time help desk. Claim tickets to assist teams.</p>
+                        <h1 className="text-xl font-black text-deep-espresso">Mentor Workspace</h1>
+                        <p className="text-xs font-medium text-dark-khaki">Real-time help desk. Claim tickets to assist teams.</p>
                     </div>
-                    <div className="ml-auto flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                        <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <div className="ml-auto flex items-center gap-2 text-xs font-bold px-3 py-1.5 rounded-full bg-corn-silk text-deep-espresso border border-dark-khaki/30 shadow-sm">
+                        <span className="h-2 w-2 rounded-full bg-deep-espresso animate-pulse"></span>
                         Live
                     </div>
                 </div>
@@ -119,34 +114,34 @@ export default function MentorWorkspacePage() {
                 <div className="flex-1 overflow-x-auto p-6 flex gap-6 items-start">
                     
                     {/* OPEN COLUMN */}
-                    <div className="flex flex-col flex-1 min-w-[320px] rounded-2xl border border-slate-800 bg-slate-900/30 overflow-hidden max-h-full">
-                        <div className="p-4 border-b border-slate-800 bg-slate-900/80 flex justify-between items-center shrink-0">
-                            <h3 className="font-bold flex items-center gap-2">
-                                <FaExclamationCircle className="text-amber-400" /> Open Requests
+                    <div className="flex flex-col flex-1 min-w-[320px] rounded-2xl border border-dark-khaki/30 bg-white overflow-hidden max-h-full shadow-sm">
+                        <div className="p-4 border-b border-dark-khaki/20 bg-corn-silk/30 flex justify-between items-center shrink-0">
+                            <h3 className="font-black flex items-center gap-2 text-deep-espresso">
+                                <FaExclamationCircle className="text-dark-khaki" /> Open Requests
                             </h3>
-                            <span className="bg-slate-800 text-slate-300 text-xs px-2 py-0.5 rounded-full font-bold">
+                            <span className="bg-white text-deep-espresso border border-dark-khaki/20 text-xs px-2 py-0.5 rounded-full font-bold">
                                 {openTickets.length}
                             </span>
                         </div>
-                        <div className="p-4 flex-1 overflow-y-auto space-y-4 scrollbar-thin scrollbar-thumb-slate-700">
+                        <div className="p-4 flex-1 overflow-y-auto space-y-4 scrollbar-thin scrollbar-thumb-dark-khaki/30">
                             {openTickets.length === 0 ? (
-                                <p className="text-center text-sm text-slate-500 py-8">No open requests right now.</p>
+                                <p className="text-center text-sm font-medium text-dark-khaki py-8">No open requests right now.</p>
                             ) : (
                                 openTickets.map(ticket => (
-                                    <div key={ticket.id} className="bg-slate-800 rounded-xl p-4 border border-slate-700 shadow-md">
-                                        <h4 className="font-bold text-white mb-2">{ticket.issueTitle}</h4>
-                                        <p className="text-sm text-slate-400 line-clamp-3 mb-3">{ticket.issueDescription}</p>
+                                    <div key={ticket.id} className="bg-corn-silk/20 rounded-xl p-4 border border-dark-khaki/20 shadow-sm">
+                                        <h4 className="font-black text-deep-espresso mb-2">{ticket.issueTitle}</h4>
+                                        <p className="text-sm font-medium text-dark-khaki line-clamp-3 mb-3">{ticket.issueDescription}</p>
                                         {ticket.techTags && (
                                             <div className="flex flex-wrap gap-2 mb-4">
                                                 {ticket.techTags.split(',').map((tag, i) => (
-                                                    <span key={i} className="text-[10px] uppercase font-bold px-2 py-1 bg-slate-900 text-indigo-300 rounded border border-indigo-500/30">
+                                                    <span key={i} className="text-[10px] uppercase font-bold px-2 py-1 bg-white text-dark-khaki rounded border border-dark-khaki/20">
                                                         {tag.trim()}
                                                     </span>
                                                 ))}
                                             </div>
                                         )}
                                         <Button 
-                                            className="w-full py-1.5 text-sm flex items-center justify-center gap-2"
+                                            className="w-full py-2.5 text-sm font-bold flex items-center justify-center gap-2 bg-dark-khaki text-corn-silk hover:bg-deep-espresso transition"
                                             onClick={() => handleClaim(ticket.id)}
                                         >
                                             <FaHandSparkles /> Claim Ticket
@@ -158,36 +153,36 @@ export default function MentorWorkspacePage() {
                     </div>
 
                     {/* CLAIMED COLUMN */}
-                    <div className="flex flex-col flex-1 min-w-[320px] rounded-2xl border border-slate-800 bg-slate-900/30 overflow-hidden max-h-full">
-                        <div className="p-4 border-b border-slate-800 bg-slate-900/80 flex justify-between items-center shrink-0">
-                            <h3 className="font-bold flex items-center gap-2">
-                                <FaTicketAlt className="text-sky-400" /> My Sessions
+                    <div className="flex flex-col flex-1 min-w-[320px] rounded-2xl border border-dark-khaki/30 bg-white overflow-hidden max-h-full shadow-sm">
+                        <div className="p-4 border-b border-dark-khaki/20 bg-corn-silk/30 flex justify-between items-center shrink-0">
+                            <h3 className="font-black flex items-center gap-2 text-deep-espresso">
+                                <FaTicketAlt className="text-dark-khaki" /> My Sessions
                             </h3>
-                            <span className="bg-slate-800 text-slate-300 text-xs px-2 py-0.5 rounded-full font-bold">
+                            <span className="bg-white text-deep-espresso border border-dark-khaki/20 text-xs px-2 py-0.5 rounded-full font-bold">
                                 {claimedTickets.length}
                             </span>
                         </div>
-                        <div className="p-4 flex-1 overflow-y-auto space-y-4 scrollbar-thin scrollbar-thumb-slate-700">
+                        <div className="p-4 flex-1 overflow-y-auto space-y-4 scrollbar-thin scrollbar-thumb-dark-khaki/30">
                             {claimedTickets.length === 0 ? (
-                                <p className="text-center text-sm text-slate-500 py-8">You haven't claimed any tickets yet.</p>
+                                <p className="text-center text-sm font-medium text-dark-khaki py-8">You haven't claimed any tickets yet.</p>
                             ) : (
                                 claimedTickets.map(ticket => (
-                                    <div key={ticket.id} className="bg-slate-800 rounded-xl p-4 border border-sky-500/30 shadow-lg shadow-sky-900/20 relative overflow-hidden">
-                                        <div className="absolute top-0 left-0 w-1 h-full bg-sky-500"></div>
-                                        <h4 className="font-bold text-white mb-2">{ticket.issueTitle}</h4>
-                                        <p className="text-sm text-slate-400 mb-4">{ticket.issueDescription}</p>
+                                    <div key={ticket.id} className="bg-white rounded-xl p-4 border border-dark-khaki/40 shadow-md relative overflow-hidden">
+                                        <div className="absolute top-0 left-0 w-1.5 h-full bg-dark-khaki"></div>
+                                        <h4 className="font-black text-deep-espresso mb-2 ml-1">{ticket.issueTitle}</h4>
+                                        <p className="text-sm font-medium text-dark-khaki mb-4 ml-1">{ticket.issueDescription}</p>
                                         
-                                        <div className="space-y-2">
+                                        <div className="space-y-2 ml-1">
                                             <Button 
                                                 variant="outline"
-                                                className="w-full py-1.5 text-sm flex items-center justify-center gap-2 border-sky-500/50 text-sky-400 hover:bg-sky-500"
+                                                className="w-full py-2.5 text-sm font-bold flex items-center justify-center gap-2 border-2 border-dark-khaki text-dark-khaki hover:bg-corn-silk transition"
                                                 onClick={() => openMeeting(ticket.mentorMeetingLink)}
                                             >
                                                 <FaVideo /> Join Meeting
                                             </Button>
                                             <Button 
                                                 variant="secondary"
-                                                className="w-full py-1.5 text-sm flex items-center justify-center gap-2 bg-emerald-600/20 text-emerald-400 hover:bg-emerald-600/40 border-emerald-500/30"
+                                                className="w-full py-2.5 text-sm font-bold flex items-center justify-center gap-2 bg-dark-khaki text-corn-silk hover:bg-deep-espresso transition border-none"
                                                 onClick={() => handleResolve(ticket.id)}
                                             >
                                                 <FaCheckCircle /> Mark Resolved
@@ -200,23 +195,23 @@ export default function MentorWorkspacePage() {
                     </div>
 
                     {/* RESOLVED COLUMN */}
-                    <div className="flex flex-col flex-1 min-w-[320px] rounded-2xl border border-slate-800 bg-slate-900/30 overflow-hidden max-h-full opacity-70">
-                        <div className="p-4 border-b border-slate-800 bg-slate-900/80 flex justify-between items-center shrink-0">
-                            <h3 className="font-bold flex items-center gap-2 text-slate-400">
-                                <FaCheckCircle className="text-emerald-500" /> Resolved
+                    <div className="flex flex-col flex-1 min-w-[320px] rounded-2xl border border-dark-khaki/30 bg-white overflow-hidden max-h-full opacity-75 shadow-sm">
+                        <div className="p-4 border-b border-dark-khaki/20 bg-corn-silk/30 flex justify-between items-center shrink-0">
+                            <h3 className="font-black flex items-center gap-2 text-deep-espresso">
+                                <FaCheckCircle className="text-dark-khaki" /> Resolved
                             </h3>
-                            <span className="bg-slate-800 text-slate-400 text-xs px-2 py-0.5 rounded-full font-bold">
+                            <span className="bg-white text-deep-espresso border border-dark-khaki/20 text-xs px-2 py-0.5 rounded-full font-bold">
                                 {resolvedTickets.length}
                             </span>
                         </div>
-                        <div className="p-4 flex-1 overflow-y-auto space-y-4 scrollbar-thin scrollbar-thumb-slate-700">
+                        <div className="p-4 flex-1 overflow-y-auto space-y-4 scrollbar-thin scrollbar-thumb-dark-khaki/30">
                             {resolvedTickets.length === 0 ? (
-                                <p className="text-center text-sm text-slate-600 py-8">No resolved tickets yet.</p>
+                                <p className="text-center text-sm font-medium text-dark-khaki py-8">No resolved tickets yet.</p>
                             ) : (
                                 resolvedTickets.map(ticket => (
-                                    <div key={ticket.id} className="bg-slate-800/50 rounded-xl p-4 border border-slate-700">
-                                        <h4 className="font-bold text-slate-300 mb-1 line-through">{ticket.issueTitle}</h4>
-                                        <p className="text-xs text-slate-500">Resolved at: {new Date(ticket.resolvedAt).toLocaleTimeString()}</p>
+                                    <div key={ticket.id} className="bg-corn-silk/40 rounded-xl p-4 border border-dark-khaki/20 shadow-sm">
+                                        <h4 className="font-bold text-deep-espresso/60 mb-1 line-through">{ticket.issueTitle}</h4>
+                                        <p className="text-xs font-medium text-dark-khaki/80">Resolved at: {new Date(ticket.resolvedAt).toLocaleTimeString()}</p>
                                     </div>
                                 ))
                             )}

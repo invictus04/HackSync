@@ -1,5 +1,3 @@
-// src/features/workspace/components/WorkspaceSidebar.jsx
-
 import { NavLink, useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import {
@@ -12,12 +10,16 @@ import { logoutUser } from "../../auth/services/authService";
 import { getMyAssignedHackathons } from "../../judge/services/judgeService";
 import { useState, useEffect } from "react";
 
-const ROLE_COLORS = {
-    ORGANIZER: "text-violet-400 bg-violet-400/10 border-violet-400/20",
-    PARTICIPANT: "text-sky-400 bg-sky-400/10 border-sky-400/20",
-    JUDGE: "text-amber-400 bg-amber-400/10 border-amber-400/20",
-    MENTOR: "text-emerald-400 bg-emerald-400/10 border-emerald-400/20",
-    ADMIN: "text-rose-400 bg-rose-400/10 border-rose-400/20",
+/*
+ * Each role gets its own quiet status colour: a small dot plus a soft tinted pill.
+ * Hues are distinct but share the same muted saturation, so nothing shouts.
+ */
+const ROLE_META = {
+    ORGANIZER: { label: "Organizer", pill: "bg-emerald-50 text-emerald-700 ring-emerald-600/20", dot: "bg-emerald-500" },
+    PARTICIPANT: { label: "Participant", pill: "bg-sky-50 text-sky-700 ring-sky-600/20", dot: "bg-sky-500" },
+    JUDGE: { label: "Judge", pill: "bg-amber-50 text-amber-800 ring-amber-600/20", dot: "bg-amber-500" },
+    MENTOR: { label: "Mentor", pill: "bg-violet-50 text-violet-700 ring-violet-600/20", dot: "bg-violet-500" },
+    ADMIN: { label: "Admin", pill: "bg-rose-50 text-rose-700 ring-rose-600/20", dot: "bg-rose-500" },
 };
 
 const ROLE_LINKS = {
@@ -29,15 +31,15 @@ const ROLE_LINKS = {
     ],
     PARTICIPANT: [
         { name: "Overview", path: "overview", icon: FaHome },
-        { name: "My Team", path: "team", icon: FaHandsHelping },
+        { name: "My team", path: "team", icon: FaHandsHelping },
         { name: "Submission", path: "submission", icon: FaProjectDiagram },
-        { name: "Get Help", path: "help", icon: FaQuestionCircle },
+        { name: "Get help", path: "help", icon: FaQuestionCircle },
     ],
     JUDGE: [
-        { name: "Assigned Projects", path: "assigned-projects", icon: FaGavel },
+        { name: "Assigned projects", path: "assigned-projects", icon: FaGavel },
     ],
     MENTOR: [
-        { name: "Help Queue", path: "help-queue", icon: FaClipboardList },
+        { name: "Help queue", path: "help-queue", icon: FaClipboardList },
     ],
     ADMIN: [
         { name: "Overview", path: "overview", icon: FaHome },
@@ -46,6 +48,17 @@ const ROLE_LINKS = {
     ],
 };
 
+const BACK_NAV = {
+    ORGANIZER: { path: "/host-dashboard", label: "Host dashboard" },
+    JUDGE: { path: "/judge-dashboard", label: "Judge dashboard" },
+    ADMIN: { path: "/admin", label: "Admin dashboard" },
+    MENTOR: { path: "/hackathons", label: "All hackathons" },
+    PARTICIPANT: { path: "/hackathons", label: "All hackathons" },
+};
+
+const focusRing =
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dark-khaki/60";
+
 export default function WorkspaceSidebar({ role, hackathon }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -53,22 +66,22 @@ export default function WorkspaceSidebar({ role, hackathon }) {
 
     useEffect(() => {
         if (role === "JUDGE" && hackathon?.id) {
-            getMyAssignedHackathons().then((assignments) => {
-                const current = assignments.find(a => a.hackathonId === hackathon.id);
-                if (current && current.isSuperJudge) {
-                    setIsSuperJudge(true);
-                }
-            }).catch(() => { });
+            getMyAssignedHackathons()
+                .then((assignments) => {
+                    const current = assignments.find((a) => a.hackathonId === hackathon.id);
+                    if (current?.isSuperJudge) setIsSuperJudge(true);
+                })
+                .catch(() => { });
         }
     }, [role, hackathon?.id]);
 
     let links = ROLE_LINKS[role] || ROLE_LINKS.PARTICIPANT;
     if (role === "JUDGE" && isSuperJudge) {
-        // Create a copy and add Submit Winners
-        links = [...links, { name: "Submit Winners", path: "submit-winners", icon: FaBalanceScale }];
+        links = [...links, { name: "Submit winners", path: "submit-winners", icon: FaBalanceScale }];
     }
 
-    const roleColorClass = ROLE_COLORS[role] || ROLE_COLORS.PARTICIPANT;
+    const meta = ROLE_META[role] || ROLE_META.PARTICIPANT;
+    const backNav = BACK_NAV[role] || BACK_NAV.PARTICIPANT;
 
     async function handleLogout() {
         await logoutUser();
@@ -76,37 +89,35 @@ export default function WorkspaceSidebar({ role, hackathon }) {
         navigate("/login");
     }
 
-    const backNav = {
-        ORGANIZER: { path: "/host-dashboard", label: "Host Dashboard" },
-        JUDGE: { path: "/judge-dashboard", label: "Judge Dashboard" },
-        ADMIN: { path: "/admin", label: "Admin Dashboard" },
-        MENTOR: { path: "/hackathons", label: "All Hackathons" },
-        PARTICIPANT: { path: "/hackathons", label: "All Hackathons" }
-    }[role] || { path: "/hackathons", label: "All Hackathons" };
-
     return (
-        <aside className="flex w-64 flex-shrink-0 flex-col border-r border-slate-800 bg-slate-900/60 backdrop-blur-sm">
+        <aside className="flex w-64 flex-shrink-0 flex-col border-r border-deep-espresso/10 bg-corn-silk">
             {/* Header */}
-            <div className="border-b border-slate-800 p-5">
+            <div className="px-5 pb-5 pt-5">
                 <button
                     onClick={() => navigate(backNav.path)}
-                    className="mb-4 flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-300 transition-colors"
+                    className={`-ml-1 mb-5 flex items-center gap-1.5 rounded px-1 py-0.5 text-xs font-medium text-deep-espresso/60 transition-colors hover:text-deep-espresso ${focusRing}`}
                 >
-                    <FaChevronLeft size={10} />
+                    <FaChevronLeft size={9} />
                     {backNav.label}
                 </button>
 
-                <h2 className="text-base font-bold leading-snug text-white line-clamp-2">
+                <h2 className="line-clamp-2 text-[15px] font-semibold leading-snug tracking-tight text-deep-espresso">
                     {hackathon?.title || "Hackathon"}
                 </h2>
 
-                <span className={`mt-2 inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium ${roleColorClass}`}>
-                    {role}
+                <span
+                    className={`mt-3 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium ring-1 ring-inset ${meta.pill}`}
+                >
+                    <span className={`h-1.5 w-1.5 rounded-full ${meta.dot}`} aria-hidden="true" />
+                    {meta.label}
+                    {role === "JUDGE" && isSuperJudge && (
+                        <span className="text-amber-700/70">· Super</span>
+                    )}
                 </span>
             </div>
 
             {/* Navigation */}
-            <nav className="flex-1 overflow-y-auto p-4 space-y-1">
+            <nav aria-label="Workspace" className="flex-1 space-y-0.5 overflow-y-auto px-3 py-2">
                 {links.map((link) => {
                     const Icon = link.icon;
                     return (
@@ -114,27 +125,42 @@ export default function WorkspaceSidebar({ role, hackathon }) {
                             key={link.name}
                             to={link.path}
                             className={({ isActive }) =>
-                                `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all ${isActive
-                                    ? "bg-sky-500/10 text-sky-300 border border-sky-500/20"
-                                    : "text-slate-400 hover:bg-slate-800 hover:text-white"
+                                `group relative flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors ${focusRing} ${isActive
+                                    ? "bg-deep-espresso/[0.06] font-semibold text-deep-espresso"
+                                    : "font-medium text-deep-espresso/60 hover:bg-deep-espresso/[0.04] hover:text-deep-espresso"
                                 }`
                             }
                         >
-                            <Icon size={14} className="flex-shrink-0" />
-                            {link.name}
+                            {({ isActive }) => (
+                                <>
+                                    <span
+                                        aria-hidden="true"
+                                        className={`absolute left-0 top-1/2 h-4 w-0.5 -translate-y-1/2 rounded-full bg-deep-espresso transition-opacity ${isActive ? "opacity-100" : "opacity-0"
+                                            }`}
+                                    />
+                                    <Icon
+                                        size={14}
+                                        className={`flex-shrink-0 transition-colors ${isActive
+                                                ? "text-deep-espresso"
+                                                : "text-deep-espresso/40 group-hover:text-deep-espresso/70"
+                                            }`}
+                                    />
+                                    {link.name}
+                                </>
+                            )}
                         </NavLink>
                     );
                 })}
             </nav>
 
             {/* Footer */}
-            <div className="border-t border-slate-800 p-4">
+            <div className="border-t border-deep-espresso/10 p-3">
                 <button
                     onClick={handleLogout}
-                    className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-slate-500 transition-all hover:bg-red-500/10 hover:text-red-400"
+                    className={`flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium text-deep-espresso/60 transition-colors hover:bg-rose-50 hover:text-rose-700 ${focusRing}`}
                 >
-                    <FaSignOutAlt size={14} />
-                    Sign Out
+                    <FaSignOutAlt size={14} className="flex-shrink-0" />
+                    Sign out
                 </button>
             </div>
         </aside>
